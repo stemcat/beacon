@@ -34,11 +34,11 @@ export function mismatchReasons(trial: Trial, age: number | null, sex: string): 
     const min = parseAgeYears(trial.minimumAge);
     const max = parseAgeYears(trial.maximumAge);
     if ((min != null && age < min) || (max != null && age > max)) {
-      reasons.push(`ages ${formatAgeRange(trial.minimumAge, trial.maximumAge).toLowerCase()}`);
+      reasons.push(t("ages {r}", { r: formatAgeRange(trial.minimumAge, trial.maximumAge).toLowerCase() }));
     }
   }
   if (sex && trial.sex && trial.sex !== "ALL" && trial.sex !== sex) {
-    reasons.push(`${formatSex(trial.sex).toLowerCase()} only`);
+    reasons.push(t("{s} only", { s: formatSex(trial.sex).toLowerCase() }));
   }
   return reasons;
 }
@@ -70,7 +70,7 @@ export function TrialCard({ trial, from, age, sex, backParams }: Props) {
           {formatStatus(trial.overallStatus)}
         </span>
         {phase && <span className="badge">{phase}</span>}
-        {trial.studyType === "OBSERVATIONAL" && <span className="badge">Observational</span>}
+        {trial.studyType === "OBSERVATIONAL" && <span className="badge">{t("Observational")}</span>}
         {site && <span className="badge badge-distance">📍 {formatDistance(site.miles)} — {site.label}</span>}
       </div>
 
@@ -82,7 +82,7 @@ export function TrialCard({ trial, from, age, sex, backParams }: Props) {
 
       {mismatches.length > 0 && (
         <p className="mismatch-note">
-          ⚠️ May not match your details — this trial accepts {mismatches.join("; ")}.
+          ⚠️ {t("May not match your details — this trial accepts")} {mismatches.join("; ")}.
         </p>
       )}
 

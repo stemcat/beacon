@@ -1,5 +1,5 @@
 import { parseEligibility, type CriteriaSection } from "../lib/eligibility";
-import { t } from "../lib/i18n";
+import { t, tn } from "../lib/i18n";
 import { criterionKey, setMark, useSelfCheck, clearMarks, type Mark } from "../state/selfcheck";
 import { AnnotatedText } from "./GlossaryTerm";
 
@@ -45,8 +45,7 @@ export function EligibilityChecklist({ criteria, nctId }: { criteria: string; nc
     return (
       <div className="eligibility">
         <p className="hint">
-          This study lists its criteria in its own format — read through it and discuss anything
-          unclear with the study team:
+          {t("This study lists its criteria in its own format — read through it and discuss anything unclear with the study team:")}
         </p>
         <pre className="criteria-raw">{result.raw}</pre>
       </div>
@@ -68,7 +67,7 @@ export function EligibilityChecklist({ criteria, nctId }: { criteria: string; nc
         <h4>
           {section.kind === "inclusion" && <span aria-hidden="true">✅ </span>}
           {section.kind === "exclusion" && <span aria-hidden="true">🚫 </span>}
-          {section.title}
+          {t(section.title)}
         </h4>
         {section.preamble && (
           <p className="hint">
@@ -105,30 +104,26 @@ export function EligibilityChecklist({ criteria, nctId }: { criteria: string; nc
   return (
     <div className="eligibility">
       <p className="hint">
-        Go through each point and mark what's true for you — it turns a wall of medical text into
-        a focused conversation. Only the study team can confirm whether you qualify.
+        {t("Go through each point and mark what's true for you — it turns a wall of medical text into a focused conversation. Only the study team can confirm whether you qualify.")}
       </p>
 
       {result.sections.map(renderSection)}
 
       <div className="selfcheck-summary">
         <p>
-          <strong>
-            {reviewed} of {allItems.length}
-          </strong>{" "}
-          points reviewed
+          <strong>{t("{done} of {total} points reviewed", { done: reviewed, total: allItems.length })}</strong>
           {unsure > 0 && (
-            <>
-              {" "}
-              · <strong>{unsure}</strong> marked "not sure" — those are exactly the questions to
-              bring to the study team
-            </>
+            <> · {t('{n} marked "not sure" — those are exactly the questions to bring to the study team', { n: unsure })}</>
           )}
           {exclusionTrue > 0 && (
             <>
               {" "}
-              · <strong>{exclusionTrue}</strong> exclusion point{exclusionTrue === 1 ? "" : "s"}{" "}
-              may apply to you — worth asking about; some exclusions have exceptions
+              ·{" "}
+              {tn(
+                exclusionTrue,
+                "{n} exclusion point may apply to you — worth asking about; some exclusions have exceptions",
+                "{n} exclusion points may apply to you — worth asking about; some exclusions have exceptions",
+              )}
             </>
           )}
         </p>
@@ -145,8 +140,7 @@ export function EligibilityChecklist({ criteria, nctId }: { criteria: string; nc
       </div>
 
       <p className="hint">
-        Dotted-underlined words have plain-language explanations — tap or hover to see them. Your
-        marks are saved only on this device.
+        {t("Dotted-underlined words have plain-language explanations — tap or hover to see them. Your marks are saved only on this device.")}
       </p>
     </div>
   );

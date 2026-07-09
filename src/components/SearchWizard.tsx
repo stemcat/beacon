@@ -108,7 +108,7 @@ export function SearchWizard() {
             value={condition}
             onChange={(e) => setCondition(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && condition.trim() && setStep(1)}
-            placeholder="e.g. breast cancer, type 2 diabetes, ALS…"
+            placeholder={t("e.g. breast cancer, type 2 diabetes, ALS…")}
             aria-label="Medical condition"
             list="condition-suggestions"
             autoFocus

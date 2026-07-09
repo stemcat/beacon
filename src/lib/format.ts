@@ -1,6 +1,6 @@
 /** Formatting helpers for registry data (statuses, phases, ages, dates). */
 
-import { t } from "./i18n";
+import { getLang, t, tn } from "./i18n";
 
 const STATUS_LABELS: Record<string, string> = {
   RECRUITING: "Recruiting now",
@@ -56,10 +56,10 @@ export function parseAgeYears(age: string | undefined): number | null {
 export function formatAgeRange(min: string | undefined, max: string | undefined): string {
   const lo = parseAgeYears(min);
   const hi = parseAgeYears(max);
-  if (lo == null && hi == null) return "All ages";
-  if (lo != null && hi == null) return `${formatAgeValue(min!)} and older`;
-  if (lo == null && hi != null) return `Up to ${formatAgeValue(max!)}`;
-  return `${formatAgeValue(min!)} to ${formatAgeValue(max!)}`;
+  if (lo == null && hi == null) return t("All ages");
+  if (lo != null && hi == null) return t("{a} and older", { a: formatAgeValue(min!) });
+  if (lo == null && hi != null) return t("Up to {a}", { a: formatAgeValue(max!) });
+  return t("{a} to {b}", { a: formatAgeValue(min!), b: formatAgeValue(max!) });
 }
 
 function formatAgeValue(age: string): string {
@@ -67,17 +67,23 @@ function formatAgeValue(age: string): string {
 }
 
 export function formatSex(sex: string | undefined): string {
-  if (sex === "MALE") return "Men";
-  if (sex === "FEMALE") return "Women";
-  return "All sexes";
+  if (sex === "MALE") return t("Men");
+  if (sex === "FEMALE") return t("Women");
+  return t("All sexes");
 }
 
-/** "2023-10-13" or "2023-10" -> "Oct 2023". */
+const MONTHS: Record<string, string[]> = {
+  en: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+  fr: ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."],
+  es: ["ene.", "feb.", "mar.", "abr.", "may.", "jun.", "jul.", "ago.", "sep.", "oct.", "nov.", "dic."],
+};
+
+/** "2023-10-13" or "2023-10" -> "Oct 2023" (localized month). */
 export function formatDate(date: string | undefined): string | null {
   if (!date) return null;
   const m = date.match(/^(\d{4})(?:-(\d{2}))?/);
   if (!m) return date;
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const months = MONTHS[getLang()] ?? MONTHS.en;
   return m[2] ? `${months[parseInt(m[2], 10) - 1]} ${m[1]}` : m[1];
 }
 
@@ -97,5 +103,5 @@ export function titleCase(snake: string): string {
 
 export function formatEnrollment(count: number | undefined): string | null {
   if (!count) return null;
-  return `${count.toLocaleString()} participant${count === 1 ? "" : "s"}`;
+  return tn(count, "{n} participant", "{n} participants");
 }

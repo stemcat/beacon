@@ -71,10 +71,76 @@ const EXPANSIONS: Expansion[] = [
   { lay: ["period pain", "painful periods"], terms: ["endometriosis", "dysmenorrhea"] },
   { lay: ["trouble getting pregnant", "fertility"], terms: ["infertility"] },
   { lay: ["hay fever"], terms: ["allergic rhinitis"] },
+
+  // French condition names → English registry terms (the registry indexes
+  // English; without this, francophone users get near-empty results).
+  { lay: ["cancer du sein"], terms: ["breast cancer"] },
+  { lay: ["cancer du poumon"], terms: ["lung cancer"] },
+  { lay: ["cancer de la prostate"], terms: ["prostate cancer"] },
+  { lay: ["cancer du colon", "cancer du côlon", "cancer colorectal"], terms: ["colorectal cancer"] },
+  { lay: ["cancer de la peau", "mélanome", "melanome"], terms: ["melanoma", "basal cell carcinoma", "squamous cell carcinoma"] },
+  { lay: ["cancer du pancréas", "cancer du pancreas"], terms: ["pancreatic cancer"] },
+  { lay: ["cancer de l'estomac"], terms: ["gastric cancer"] },
+  { lay: ["cancer du foie"], terms: ["hepatocellular carcinoma", "liver cancer"] },
+  { lay: ["cancer des ovaires", "cancer de l'ovaire"], terms: ["ovarian cancer"] },
+  { lay: ["cancer du cerveau", "tumeur au cerveau", "tumeur cérébrale"], terms: ["glioma", "glioblastoma", "brain neoplasm"] },
+  { lay: ["leucémie", "leucemie"], terms: ["leukemia"] },
+  { lay: ["lymphome"], terms: ["lymphoma"] },
+  { lay: ["diabète", "diabete", "diabète de type 2"], terms: ["diabetes mellitus", "type 2 diabetes"] },
+  { lay: ["hypertension artérielle", "tension artérielle élevée"], terms: ["hypertension"] },
+  { lay: ["insuffisance cardiaque"], terms: ["heart failure"] },
+  { lay: ["crise cardiaque", "infarctus"], terms: ["myocardial infarction"] },
+  { lay: ["avc", "accident vasculaire cérébral"], terms: ["stroke", "ischemic stroke"] },
+  { lay: ["maladie d'alzheimer", "alzheimer"], terms: ["Alzheimer disease"] },
+  { lay: ["maladie de parkinson"], terms: ["Parkinson disease"] },
+  { lay: ["sclérose en plaques", "sclerose en plaques"], terms: ["multiple sclerosis"] },
+  { lay: ["dépression", "depression majeure"], terms: ["depression", "major depressive disorder"] },
+  { lay: ["polyarthrite rhumatoïde"], terms: ["rheumatoid arthritis"] },
+  { lay: ["arthrose"], terms: ["osteoarthritis"] },
+  { lay: ["maladie de crohn"], terms: ["Crohn disease"] },
+  { lay: ["maladie rénale", "insuffisance rénale"], terms: ["chronic kidney disease", "renal insufficiency"] },
+  { lay: ["asthme"], terms: ["asthma"] },
+  { lay: ["obésité", "obesite", "surpoids"], terms: ["obesity"] },
+  { lay: ["épilepsie", "epilepsie"], terms: ["epilepsy"] },
+
+  // Spanish condition names → English registry terms.
+  { lay: ["cáncer de mama", "cancer de mama", "cáncer de seno"], terms: ["breast cancer"] },
+  { lay: ["cáncer de pulmón", "cancer de pulmon"], terms: ["lung cancer"] },
+  { lay: ["cáncer de próstata", "cancer de prostata"], terms: ["prostate cancer"] },
+  { lay: ["cáncer de colon", "cancer colorrectal"], terms: ["colorectal cancer"] },
+  { lay: ["cáncer de piel"], terms: ["melanoma", "basal cell carcinoma", "squamous cell carcinoma"] },
+  { lay: ["cáncer de páncreas"], terms: ["pancreatic cancer"] },
+  { lay: ["cáncer de estómago", "cancer gastrico"], terms: ["gastric cancer"] },
+  { lay: ["cáncer de hígado"], terms: ["hepatocellular carcinoma", "liver cancer"] },
+  { lay: ["cáncer de ovario"], terms: ["ovarian cancer"] },
+  { lay: ["cáncer de cerebro", "tumor cerebral"], terms: ["glioma", "glioblastoma", "brain neoplasm"] },
+  { lay: ["leucemia"], terms: ["leukemia"] },
+  { lay: ["linfoma"], terms: ["lymphoma"] },
+  { lay: ["diabetes tipo 2", "azúcar en la sangre"], terms: ["diabetes mellitus", "type 2 diabetes"] },
+  { lay: ["presión alta", "presion alta", "hipertensión"], terms: ["hypertension"] },
+  { lay: ["insuficiencia cardíaca", "insuficiencia cardiaca"], terms: ["heart failure"] },
+  { lay: ["ataque al corazón", "infarto"], terms: ["myocardial infarction"] },
+  { lay: ["derrame cerebral", "accidente cerebrovascular"], terms: ["stroke", "ischemic stroke"] },
+  { lay: ["enfermedad de alzheimer"], terms: ["Alzheimer disease"] },
+  { lay: ["enfermedad de parkinson"], terms: ["Parkinson disease"] },
+  { lay: ["esclerosis múltiple", "esclerosis multiple"], terms: ["multiple sclerosis"] },
+  { lay: ["depresión"], terms: ["depression", "major depressive disorder"] },
+  { lay: ["artritis reumatoide"], terms: ["rheumatoid arthritis"] },
+  { lay: ["enfermedad de crohn"], terms: ["Crohn disease"] },
+  { lay: ["enfermedad renal", "insuficiencia renal"], terms: ["chronic kidney disease", "renal insufficiency"] },
+  { lay: ["asma"], terms: ["asthma"] },
+  { lay: ["obesidad", "sobrepeso"], terms: ["obesity"] },
+  { lay: ["epilepsia"], terms: ["epilepsy"] },
 ];
 
 function normalize(s: string): string {
-  return s.toLowerCase().replace(/[^\w\s/'-]/g, "").replace(/\s+/g, " ").trim();
+  return s
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "") // fold accents: "mélanome" matches "melanome"
+    .replace(/[^\w\s/'-]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 export interface ExpandedCondition {

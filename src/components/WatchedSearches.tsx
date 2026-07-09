@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { t, useLang } from "../lib/i18n";
+import { t, tn, useLang } from "../lib/i18n";
 import { href, navigate } from "../lib/router";
 import {
   checkWatchedSearches,
@@ -35,8 +35,7 @@ export function WatchedSearches() {
     <section className="watched card">
       <h3>{t("Searches you're watching")}</h3>
       <p className="hint">
-        Beacon re-checks these when you visit — right here in your browser, so nobody else knows
-        what you're watching. New trials open every week.
+        {t("Beacon re-checks these when you visit — right here in your browser, so nobody else knows what you're watching. New trials open every week.")}
       </p>
       <ul className="watched-list">
         {watched.map((w) => (
@@ -58,11 +57,13 @@ export function WatchedSearches() {
               }}
             >
               <strong>{w.cond}</strong>
-              {w.loc && w.radius ? ` within ${w.radius} mi of ${w.loc === "your location" ? "you" : w.loc}` : " — worldwide"}
+              {w.loc && w.radius
+                ? ` ${t("within {r} miles of {place}", { r: w.radius, place: w.loc === "your location" ? t("you (as in: near you)") : w.loc })}`
+                : ` — ${t("worldwide")}`}
             </a>
             {w.newIds.length > 0 && (
               <span className="badge badge-new">
-                {w.newIds.length} new trial{w.newIds.length === 1 ? "" : "s"}
+                {tn(w.newIds.length, "{n} new trial", "{n} new trials")}
               </span>
             )}
             <button

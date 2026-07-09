@@ -12,7 +12,7 @@ import {
   statusTone,
   titleCase,
 } from "../lib/format";
-import { getLang, t, useLang } from "../lib/i18n";
+import { getLang, t, tn, useLang } from "../lib/i18n";
 import { href, useRoute } from "../lib/router";
 import { isSaved, toggleSaved, useSavedTrials } from "../state/saved";
 import { Disclaimer } from "./Disclaimer";
@@ -22,24 +22,24 @@ import { AnnotatedText } from "./GlossaryTerm";
 /** Questions worth asking, tailored to what the study record says. */
 function doctorQuestions(trial: Trial): string[] {
   const q = [
-    "Based on my health history, do you think I might qualify for this trial?",
-    "How would this trial compare to my current treatment options?",
-    "What are the possible risks and side effects for someone like me?",
-    "How often would I need to visit, and for how long?",
+    t("Based on my health history, do you think I might qualify for this trial?"),
+    t("How would this trial compare to my current treatment options?"),
+    t("What are the possible risks and side effects for someone like me?"),
+    t("How often would I need to visit, and for how long?"),
   ];
   const criteria = (trial.eligibilityCriteria ?? "").toLowerCase();
   const summary = (trial.briefSummary ?? "").toLowerCase();
   if (summary.includes("placebo") || criteria.includes("placebo")) {
-    q.push("Could I receive a placebo instead of the study treatment, and what happens if I do?");
+    q.push(t("Could I receive a placebo instead of the study treatment, and what happens if I do?"));
   }
   if (trial.phases.some((p) => p.includes("PHASE1"))) {
-    q.push("This is an early-phase trial focused on safety — what is known about this treatment so far?");
+    q.push(t("This is an early-phase trial focused on safety — what is known about this treatment so far?"));
   }
   if (criteria.includes("washout")) {
-    q.push("Would I need to stop any of my current medicines before joining, and is that safe for me?");
+    q.push(t("Would I need to stop any of my current medicines before joining, and is that safe for me?"));
   }
-  q.push("If the treatment helps me, can I keep receiving it after the trial ends?");
-  q.push("What costs, if any, would I or my insurance be responsible for?");
+  q.push(t("If the treatment helps me, can I keep receiving it after the trial ends?"));
+  q.push(t("What costs, if any, would I or my insurance be responsible for?"));
   return q;
 }
 
@@ -70,7 +70,7 @@ export function TrialDetail({ nctId }: { nctId: string }) {
       </div>
     );
   }
-  if (!trial) return <div className="loading" role="status">Loading study details…</div>;
+  if (!trial) return <div className="loading" role="status">{t("Loading study details…")}</div>;
 
   const phase = formatPhases(trial.phases);
   const saved = isSaved(trial.nctId);
@@ -93,15 +93,15 @@ export function TrialDetail({ nctId }: { nctId: string }) {
       <div className="trial-card-badges">
         <span className={`badge badge-${statusTone(trial.overallStatus)}`}>{formatStatus(trial.overallStatus)}</span>
         {phase && <span className="badge">{phase}</span>}
-        {trial.studyType && <span className="badge">{titleCase(trial.studyType)}</span>}
+        {trial.studyType && <span className="badge">{t(titleCase(trial.studyType))}</span>}
         <span className="badge badge-muted">{trial.nctId}</span>
       </div>
 
       <h2 className="trial-title">{trial.briefTitle}</h2>
       <p className="trial-sponsor">
-        Run by {trial.leadSponsor ?? "unknown sponsor"}
-        {trial.startDate ? ` · started ${formatDate(trial.startDate)}` : ""}
-        {trial.lastUpdateDate ? ` · updated ${formatDate(trial.lastUpdateDate)}` : ""}
+        {t("Run by")} {trial.leadSponsor ?? t("unknown sponsor")}
+        {trial.startDate ? ` · ${t("started")} ${formatDate(trial.startDate)}` : ""}
+        {trial.lastUpdateDate ? ` · ${t("updated")} ${formatDate(trial.lastUpdateDate)}` : ""}
       </p>
 
       <div className="trial-actions">
@@ -142,11 +142,11 @@ export function TrialDetail({ nctId }: { nctId: string }) {
       <section className="card detail-section">
         <h3>{t("At a glance")}</h3>
         <dl className="facts">
-          <div><dt>Who can join</dt><dd>{formatAgeRange(trial.minimumAge, trial.maximumAge)} · {formatSex(trial.sex)}{trial.healthyVolunteers ? " · accepts healthy volunteers" : ""}</dd></div>
-          {trial.conditions.length > 0 && <div><dt>Conditions</dt><dd>{trial.conditions.join(", ")}</dd></div>}
+          <div><dt>{t("Who can join")}</dt><dd>{formatAgeRange(trial.minimumAge, trial.maximumAge)} · {formatSex(trial.sex)}{trial.healthyVolunteers ? ` · ${t("accepts healthy volunteers")}` : ""}</dd></div>
+          {trial.conditions.length > 0 && <div><dt>{t("Conditions")}</dt><dd>{trial.conditions.join(", ")}</dd></div>}
           {trial.interventions.length > 0 && (
             <div>
-              <dt>What's being tested</dt>
+              <dt>{t("What's being tested")}</dt>
               <dd>
                 {trial.interventions.slice(0, 6).map((i, idx) => (
                   <span key={idx} className="intervention">
@@ -157,8 +157,8 @@ export function TrialDetail({ nctId }: { nctId: string }) {
               </dd>
             </div>
           )}
-          {formatEnrollment(trial.enrollment) && <div><dt>Study size</dt><dd>{formatEnrollment(trial.enrollment)}</dd></div>}
-          {trial.primaryCompletionDate && <div><dt>Main results expected</dt><dd>{formatDate(trial.primaryCompletionDate)}</dd></div>}
+          {formatEnrollment(trial.enrollment) && <div><dt>{t("Study size")}</dt><dd>{formatEnrollment(trial.enrollment)}</dd></div>}
+          {trial.primaryCompletionDate && <div><dt>{t("Main results expected")}</dt><dd>{formatDate(trial.primaryCompletionDate)}</dd></div>}
         </dl>
       </section>
 
@@ -170,13 +170,13 @@ export function TrialDetail({ nctId }: { nctId: string }) {
       )}
 
       <section className="card detail-section">
-        <h3>Where this trial is running {sites.length > 0 ? `(${sites.length} site${sites.length === 1 ? "" : "s"})` : ""}</h3>
-        {sites.length === 0 && <p className="hint">No site locations are listed yet. Contact the study team below.</p>}
+        <h3>{t("Where this trial is running")} {sites.length > 0 ? `(${tn(sites.length, "{n} site", "{n} sites")})` : ""}</h3>
+        {sites.length === 0 && <p className="hint">{t("No site locations are listed yet. Contact the study team below.")}</p>}
         <ul className="site-list">
           {sites.slice(0, 12).map((l, i) => (
             <li key={i} className="site">
               <div className="site-name">
-                {l.facility ?? "Study site"}
+                {l.facility ?? t("Study site")}
                 {l.miles != null && <span className="badge badge-distance">{formatDistance(l.miles)}</span>}
               </div>
               <div className="site-place">{[l.city, l.state, l.country].filter(Boolean).join(", ")}</div>
@@ -192,8 +192,8 @@ export function TrialDetail({ nctId }: { nctId: string }) {
         </ul>
         {sites.length > 12 && (
           <p className="hint">
-            + {sites.length - 12} more sites — see the{" "}
-            <a href={officialUrl(trial.nctId)} target="_blank" rel="noopener noreferrer">official record</a>.
+            {t("+ {n} more sites — see the", { n: sites.length - 12 })}{" "}
+            <a href={officialUrl(trial.nctId)} target="_blank" rel="noopener noreferrer">{t("official record")}</a>.
           </p>
         )}
       </section>
@@ -212,8 +212,8 @@ export function TrialDetail({ nctId }: { nctId: string }) {
             ))}
           </ul>
           <p className="hint">
-            It's completely normal to call and ask questions before deciding anything. Mention the
-            study ID: <strong>{trial.nctId}</strong>.
+            {t("It's completely normal to call and ask questions before deciding anything. Mention the study ID:")}{" "}
+            <strong>{trial.nctId}</strong>.
           </p>
         </section>
       )}

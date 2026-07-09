@@ -13,8 +13,7 @@ export function SavedTrials() {
       <div className="empty-state">
         <h2>{t("No saved trials yet")}</h2>
         <p className="hint">
-          When a trial looks promising, tap <strong>☆ Save</strong>. Your list lives only on this
-          device and makes a tidy printout to bring to your next appointment.
+          {t("When a trial looks promising, tap ☆ Save. Your list lives only on this device and makes a tidy printout to bring to your next appointment.")}
         </p>
         <a className="btn btn-primary" href="#/">{t("Start a search")}</a>
       </div>
@@ -30,8 +29,7 @@ export function SavedTrials() {
         </button>
       </div>
       <p className="hint no-print">
-        Stored only on this device. Print this page — it includes each trial's registry ID so your
-        doctor can look them up instantly.
+        {t("Stored only on this device. Print this page — it includes each trial's registry ID so your doctor can look them up instantly.")}
       </p>
 
       <div className="results-list">

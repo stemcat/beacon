@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { searchStudies, type Trial } from "../api/ctgov";
 import type { GeoPoint } from "../api/geocode";
 import { expandCondition } from "../lib/conditions";
-import { getLang, t, useLang } from "../lib/i18n";
+import { getLang, t, tn, useLang } from "../lib/i18n";
 import { href, useRoute } from "../lib/router";
 import { isWatched, unwatchSearch, watchKey, watchSearch, useWatchedSearches } from "../state/searches";
 import { TrialCard } from "./TrialCard";
@@ -114,9 +114,9 @@ export function ResultsList() {
   if (!condition) {
     return (
       <div className="empty-state">
-        <p>No search yet.</p>
+        <p>{t("No search yet.")}</p>
         <a className="btn btn-primary" href="#/">
-          Start a search
+          {t("Start a search")}
         </a>
       </div>
     );
@@ -127,8 +127,12 @@ export function ResultsList() {
 
   const whereLabel =
     from && radius
-      ? ` within ${radius} miles of ${locLabel === "your location" ? "you" : locLabel ?? "your location"}`
-      : " worldwide";
+      ? " " +
+        t("within {r} miles of {place}", {
+          r: radius,
+          place: locLabel === "your location" ? t("you (as in: near you)") : locLabel ?? t("your location"),
+        })
+      : " " + t("worldwide");
 
   return (
     <div className="results">
@@ -144,7 +148,7 @@ export function ResultsList() {
           <p className="hint">
             {totalCount === 0
               ? t("No recruiting trials found.")
-              : `${totalCount.toLocaleString()} recruiting ${totalCount === 1 ? "trial" : "trials"} found.`}{" "}
+              : tn(totalCount, "{n} recruiting trial found.", "{n} recruiting trials found.")}{" "}
             <a href="#/">{t("Change search")}</a>
           </p>
         )}
@@ -153,8 +157,8 @@ export function ResultsList() {
         )}
         {expanded.added.length > 0 && (
           <p className="hint expansion-note">
-            Also searching related medical terms: <strong>{expanded.added.join(", ")}</strong> —
-            doctors often register trials under these names.
+            {t("Also searching related medical terms:")} <strong>{expanded.added.join(", ")}</strong> —{" "}
+            {t("doctors often register trials under these names.")}
           </p>
         )}
       </div>
@@ -164,11 +168,11 @@ export function ResultsList() {
 
       {!loading && totalCount === 0 && (
         <div className="empty-state card">
-          <h3>No trials matched — but don't stop here.</h3>
+          <h3>{t("No trials matched — but don't stop here.")}</h3>
           <ul>
-            <li>Try a broader search radius, or search anywhere in the world.</li>
-            <li>Try a broader condition name (e.g. “lung cancer” instead of a subtype).</li>
-            <li>New trials open every week — check back, and ask your doctor about trials too.</li>
+            <li>{t("Try a broader search radius, or search anywhere in the world.")}</li>
+            <li>{t("Try a broader condition name (e.g. “lung cancer” instead of a subtype).")}</li>
+            <li>{t("New trials open every week — check back, and ask your doctor about trials too.")}</li>
           </ul>
         </div>
       )}
@@ -196,8 +200,9 @@ export function ResultsList() {
 
       {trials.length > 0 && (
         <p className="hint results-tip">
-          Tip: save trials that look promising ({<span aria-hidden="true">☆</span>}), then open{" "}
-          <a href={href("/saved")}>Saved</a> to print a summary you can bring to your doctor.
+          {t("Tip: save trials that look promising (☆), then open")}{" "}
+          <a href={href("/saved")}>{t("Saved")}</a>{" "}
+          {t("to print a summary you can bring to your doctor.")}
         </p>
       )}
     </div>

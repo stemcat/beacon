@@ -3,6 +3,8 @@
  * city/postcode search (fallback), and great-circle distance.
  */
 
+import { t } from "../lib/i18n";
+
 export interface GeoPoint {
   lat: number;
   lng: number;
@@ -15,12 +17,12 @@ export interface GeocodeResult extends GeoPoint {
 export function getBrowserLocation(): Promise<GeoPoint> {
   return new Promise((resolve, reject) => {
     if (!("geolocation" in navigator)) {
-      reject(new Error("Location services aren't available in this browser."));
+      reject(new Error(t("Location services aren't available in this browser.")));
       return;
     }
     navigator.geolocation.getCurrentPosition(
       (pos) => resolve({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
-      () => reject(new Error("We couldn't get your location. You can type a city or postal code instead.")),
+      () => reject(new Error(t("We couldn't get your location. You can type a city or postal code instead."))),
       { timeout: 10_000, maximumAge: 600_000 },
     );
   });
@@ -36,7 +38,7 @@ export async function geocodeSearch(query: string): Promise<GeocodeResult[]> {
   const res = await fetch(`https://nominatim.openstreetmap.org/search?${q}`, {
     headers: { Accept: "application/json" },
   });
-  if (!res.ok) throw new Error("Location search is unavailable right now. Please try again.");
+  if (!res.ok) throw new Error(t("Location search is unavailable right now. Please try again."));
   const data: Array<{ lat: string; lon: string; display_name: string }> = await res.json();
   return data.map((d) => ({
     lat: parseFloat(d.lat),

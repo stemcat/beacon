@@ -32,45 +32,45 @@ function Home() {
 }
 
 function About() {
+  useLang();
   return (
     <div className="about">
-      <h2>Why Beacon exists</h2>
+      <h2>{t("Why Beacon exists")}</h2>
       <div className="card detail-section">
         <p>
-          Roughly <strong>80% of clinical trials are delayed</strong> because they can't recruit
-          enough participants, and fewer than 5% of eligible cancer patients ever join one. That's
-          not a lack of trials or a lack of willing patients — it's a discovery problem. The
-          official registry, ClinicalTrials.gov, is public and complete, but it was built for
-          researchers, not for a person who just got a diagnosis.
+          {t(
+            "Roughly 80% of clinical trials are delayed because they can't recruit enough participants, and fewer than 5% of eligible cancer patients ever join one. That's not a lack of trials or a lack of willing patients — it's a discovery problem. The official registry, ClinicalTrials.gov, is public and complete, but it was built for researchers, not for a person who just got a diagnosis.",
+          )}
         </p>
         <p>
-          Beacon is the missing translation layer: the same official data, reshaped around the
-          questions patients actually have. <em>Is there a trial for my condition near me? Could I
-          qualify? What would it involve? Who do I call?</em>
+          {t(
+            "Beacon is the missing translation layer: the same official data, reshaped around the questions patients actually have. Is there a trial for my condition near me? Could I qualify? What would it involve? Who do I call?",
+          )}
         </p>
         <p>
-          Every patient matched is a trial accelerated — and every trial accelerated is a treatment
-          that arrives sooner for everyone.
+          {t(
+            "Every patient matched is a trial accelerated — and every trial accelerated is a treatment that arrives sooner for everyone.",
+          )}
         </p>
       </div>
       <div className="card detail-section">
-        <h3>Our promises</h3>
+        <h3>{t("Our promises")}</h3>
         <ul className="promise-list">
-          <li><strong>Free for patients, forever.</strong> No accounts, no paywalls.</li>
-          <li><strong>Privacy is absolute.</strong> Beacon has no servers. Your searches go directly from your browser to the public registry and nowhere else.</li>
-          <li><strong>No editorializing.</strong> We translate jargon; we never hype a treatment or hide a risk. Every trial links to its official record.</li>
-          <li><strong>Your doctor stays in charge.</strong> Beacon prepares you for a conversation — it never replaces one.</li>
+          <li><strong>{t("Free for patients, forever.")}</strong> {t("No accounts, no paywalls.")}</li>
+          <li><strong>{t("Your privacy is absolute.")}</strong> {t("Beacon has no servers. Your searches go directly from your browser to the public registry and nowhere else.")}</li>
+          <li><strong>{t("No editorializing.")}</strong> {t("We translate jargon; we never hype a treatment or hide a risk. Every trial links to its official record.")}</li>
+          <li><strong>{t("Your doctor stays in charge.")}</strong> {t("Beacon prepares you for a conversation — it never replaces one.")}</li>
         </ul>
       </div>
       <div className="card detail-section">
-        <h3>Data source</h3>
+        <h3>{t("Data source")}</h3>
         <p>
-          All trial data comes live from{" "}
+          {t(
+            "All trial data comes live from ClinicalTrials.gov, the registry run by the U.S. National Library of Medicine, covering studies in more than 200 countries. Location search is powered by OpenStreetMap Nominatim.",
+          )}{" "}
           <a href="https://clinicaltrials.gov" target="_blank" rel="noopener noreferrer">
-            ClinicalTrials.gov
+            ClinicalTrials.gov ↗
           </a>
-          , the registry run by the U.S. National Library of Medicine, covering studies in more
-          than 200 countries. Location search is powered by OpenStreetMap Nominatim.
         </p>
       </div>
       <Disclaimer />
@@ -119,10 +119,10 @@ export default function App() {
       <main>{view}</main>
       <footer className="footer no-print">
         <p>
-          Beacon · free clinical trial finder · data live from{" "}
+          Beacon · {t("free clinical trial finder")} · {t("data live from")}{" "}
           <a href="https://clinicaltrials.gov" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a>{" "}
-          · not medical advice · no tracking, ever ·{" "}
-          <a href="#/partners">embed Beacon on your site</a>
+          · {t("not medical advice")} · {t("no tracking, ever")} ·{" "}
+          <a href="#/partners">{t("embed Beacon on your site")}</a>
         </p>
       </footer>
     </div>
