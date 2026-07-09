@@ -32,7 +32,8 @@ const DIST = join(process.cwd(), "dist");
 // Canonical production URL, pinned in code so canonicals/sitemap/hreflang
 // never drift. BEACON_BASE_URL env var overrides (forks, staging).
 const BASE_URL = (process.env.BEACON_BASE_URL ?? "https://beacontrials.ca").replace(/\/$/, "");
-const METRO_RADIUS_MILES = 100;
+const METRO_RADIUS_MILES = 100; // API filter value
+const METRO_RADIUS_KM = 160; // displayed on pages — Canada is metric
 
 type PageLang = "en" | "fr";
 
@@ -149,12 +150,12 @@ const L = {
     descNational: (n: string, c: string) =>
       `${n} ${c.toLowerCase()} clinical trials are recruiting at Canadian sites. Free plain-language summaries in English and French: who qualifies, where each trial runs, who to call. No account needed.`,
     descMetro: (n: string, c: string, city: string) =>
-      `${n} ${c.toLowerCase()} clinical trials are recruiting within ${METRO_RADIUS_MILES} miles of ${city}, including sites across the US border. Free plain-language summaries — who qualifies and who to call.`,
+      `${n} ${c.toLowerCase()} clinical trials are recruiting within ${METRO_RADIUS_KM} km of ${city}, including sites across the US border. Free plain-language summaries — who qualifies and who to call.`,
     h1National: (c: string) => `${c} clinical trials recruiting in Canada`,
     h1Metro: (c: string, city: string) => `${c} clinical trials near ${city}`,
     subtitle: (n: string) => `${n} recruiting trials in the official registry · updated`,
     subtitleTail: "free · no account · no tracking · English & français",
-    borderNote: `Searches within ${METRO_RADIUS_MILES} miles deliberately include sites across the US border — often a Canadian patient's nearest option.`,
+    borderNote: `Searches within ${METRO_RADIUS_KM} km deliberately include sites across the US border — often a Canadian patient's nearest option.`,
     alsoCovers: "Also covers trials registered under:",
     ctaSearch: "Search near your location →",
     ctaAll: (n: string, c: string) => `See all ${n} ${c.toLowerCase()} trials →`,
@@ -189,12 +190,12 @@ const L = {
     descNational: (n: string, c: string) =>
       `${n} essais cliniques (${c.toLowerCase()}) recrutent dans des sites canadiens. Résumés gratuits en langage clair, en français et en anglais : qui est admissible, où se déroule chaque essai, qui appeler. Aucun compte requis.`,
     descMetro: (n: string, c: string, city: string) =>
-      `${n} essais cliniques (${c.toLowerCase()}) recrutent à moins de ${METRO_RADIUS_MILES} mi de ${city}, y compris des sites de l'autre côté de la frontière américaine. Résumés gratuits en langage clair.`,
+      `${n} essais cliniques (${c.toLowerCase()}) recrutent à moins de ${METRO_RADIUS_KM} km de ${city}, y compris des sites de l'autre côté de la frontière américaine. Résumés gratuits en langage clair.`,
     h1National: (c: string) => `Essais cliniques au Canada : ${c.toLowerCase()}`,
     h1Metro: (c: string, city: string) => `Essais cliniques près de ${city} : ${c.toLowerCase()}`,
     subtitle: (n: string) => `${n} essais en recrutement dans le registre officiel · mis à jour en`,
     subtitleTail: "gratuit · sans compte · sans pistage · English & français",
-    borderNote: `Les recherches dans un rayon de ${METRO_RADIUS_MILES} mi incluent volontairement les sites de l'autre côté de la frontière américaine — souvent l'option la plus proche pour un patient canadien.`,
+    borderNote: `Les recherches dans un rayon de ${METRO_RADIUS_KM} km incluent volontairement les sites de l'autre côté de la frontière américaine — souvent l'option la plus proche pour un patient canadien.`,
     alsoCovers: "Couvre aussi les essais enregistrés sous :",
     ctaSearch: "Chercher près de chez vous →",
     ctaAll: (n: string, c: string) => `Voir les ${n} essais (${c.toLowerCase()}) →`,

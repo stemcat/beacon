@@ -1,6 +1,7 @@
 /** Formatting helpers for registry data (statuses, phases, ages, dates). */
 
 import { getLang, t, tn } from "./i18n";
+import { getUnit, milesToKm } from "./units";
 
 const STATUS_LABELS: Record<string, string> = {
   RECRUITING: "Recruiting now",
@@ -88,7 +89,13 @@ export function formatDate(date: string | undefined): string | null {
 }
 
 export function formatDistance(miles: number): string {
-  if (miles < 1) return "under 1 mi";
+  if (getUnit() === "km") {
+    const km = milesToKm(miles);
+    if (km < 1) return t("under 1 km");
+    if (km < 10) return `${km.toFixed(1)} km`;
+    return `${Math.round(km)} km`;
+  }
+  if (miles < 1) return t("under 1 mi");
   if (miles < 10) return `${miles.toFixed(1)} mi`;
   return `${Math.round(miles)} mi`;
 }

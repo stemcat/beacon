@@ -166,6 +166,18 @@ input:focus, select:focus, button:focus-visible, a:focus-visible, .glossary-term
 .results-header h2 { font-size: 24px; letter-spacing: -0.02em; margin: 0 0 4px; }
 .badge-new { background: var(--warn-bg); color: var(--warn); border-color: transparent; }
 
+/* ---------- Unit toggle ---------- */
+.results-header-actions { display: flex; align-items: center; gap: 10px; }
+.unit-toggle {
+  display: inline-flex; border: 1.5px solid var(--border); border-radius: 8px; overflow: hidden;
+  vertical-align: middle;
+}
+.unit-toggle button {
+  border: none; background: var(--surface); color: var(--text-soft);
+  padding: 4px 10px; font-size: 13px; font-weight: 700; cursor: pointer;
+}
+.unit-toggle button.active { background: var(--accent); color: var(--accent-contrast); }
+
 /* ---------- Watched searches ---------- */
 .watched { max-width: 620px; margin: 22px auto 0; }
 .watched h3 { margin: 0 0 6px; }

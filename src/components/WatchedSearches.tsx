@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { t, tn, useLang } from "../lib/i18n";
 import { href, navigate } from "../lib/router";
+import { radiusKmLabel, useUnit } from "../lib/units";
 import {
   checkWatchedSearches,
   markSearchSeen,
@@ -23,6 +24,7 @@ function searchHref(w: WatchedSearch): string {
 
 export function WatchedSearches() {
   useLang();
+  const unit = useUnit();
   const watched = useWatchedSearches();
 
   useEffect(() => {
@@ -58,7 +60,11 @@ export function WatchedSearches() {
             >
               <strong>{w.cond}</strong>
               {w.loc && w.radius
-                ? ` ${t("within {r} miles of {place}", { r: w.radius, place: w.loc === "your location" ? t("you (as in: near you)") : w.loc })}`
+                ? ` ${
+                    unit === "km"
+                      ? t("within {r} km of {place}", { r: radiusKmLabel(w.radius), place: w.loc === "your location" ? t("you (as in: near you)") : w.loc })
+                      : t("within {r} miles of {place}", { r: w.radius, place: w.loc === "your location" ? t("you (as in: near you)") : w.loc })
+                  }`
                 : ` — ${t("worldwide")}`}
             </a>
             {w.newIds.length > 0 && (

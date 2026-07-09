@@ -3,6 +3,8 @@ import { getBrowserLocation, geocodeSearch, type GeocodeResult } from "../api/ge
 import { suggestConditions } from "../lib/conditions";
 import { t, useLang } from "../lib/i18n";
 import { navigate } from "../lib/router";
+import { radiusKmLabel, useUnit } from "../lib/units";
+import { UnitToggle } from "./UnitToggle";
 
 const COMMON_CONDITIONS = [
   "Breast cancer",
@@ -19,16 +21,11 @@ const COMMON_CONDITIONS = [
   "Heart failure",
 ];
 
-const RADII = [
-  { value: 25, label: "Within 25 miles" },
-  { value: 50, label: "Within 50 miles" },
-  { value: 100, label: "Within 100 miles" },
-  { value: 250, label: "Within 250 miles" },
-  { value: 0, label: "Anywhere in the world" },
-];
+const RADII_MILES = [25, 50, 100, 250];
 
 export function SearchWizard() {
   useLang(); // re-render on language change
+  const unit = useUnit();
   const [step, setStep] = useState(0);
   const [condition, setCondition] = useState("");
   const [age, setAge] = useState("");
@@ -190,13 +187,18 @@ export function SearchWizard() {
           <h2>{t("Where should we look?")}</h2>
           <p className="hint">{t("Trials often require regular visits, so distance matters.")}</p>
           <label className="field">
-            <span>{t("How far could you travel?")}</span>
+            <span>
+              {t("How far could you travel?")} <UnitToggle />
+            </span>
             <select value={radius} onChange={(e) => setRadius(Number(e.target.value))} aria-label="Search radius">
-              {RADII.map((r) => (
-                <option key={r.value} value={r.value}>
-                  {t(r.label)}
+              {RADII_MILES.map((mi) => (
+                <option key={mi} value={mi}>
+                  {unit === "km"
+                    ? t("Within {n} km", { n: radiusKmLabel(mi) })
+                    : t("Within {n} miles", { n: mi })}
                 </option>
               ))}
+              <option value={0}>{t("Anywhere in the world")}</option>
             </select>
           </label>
 

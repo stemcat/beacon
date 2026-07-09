@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { haversineMiles } from "../src/api/geocode";
+import { radiusKmLabel, setUnit, unitForLocale } from "../src/lib/units";
 import {
   formatAgeRange,
   formatDate,
@@ -75,9 +76,36 @@ describe("haversineMiles", () => {
 });
 
 describe("formatDistance", () => {
-  it("adapts precision to magnitude", () => {
+  it("adapts precision to magnitude (miles default outside a browser)", () => {
     expect(formatDistance(0.4)).toBe("under 1 mi");
     expect(formatDistance(3.14)).toBe("3.1 mi");
     expect(formatDistance(42.7)).toBe("43 mi");
+  });
+
+  it("converts to km when the unit is km", () => {
+    setUnit("km");
+    expect(formatDistance(0.4)).toBe("under 1 km");
+    expect(formatDistance(3.14)).toBe("5.1 km");
+    expect(formatDistance(100)).toBe("161 km");
+    setUnit("mi");
+  });
+});
+
+describe("units", () => {
+  it("defaults by locale region: Canada km, US miles", () => {
+    expect(unitForLocale("en-CA")).toBe("km");
+    expect(unitForLocale("fr-CA")).toBe("km");
+    expect(unitForLocale("en-US")).toBe("mi");
+    expect(unitForLocale("en-GB")).toBe("mi");
+    expect(unitForLocale("es-MX")).toBe("km");
+    expect(unitForLocale("fr")).toBe("km");
+    expect(unitForLocale("en")).toBe("mi");
+  });
+
+  it("rounds radius km labels to friendly values", () => {
+    expect(radiusKmLabel(25)).toBe(40);
+    expect(radiusKmLabel(50)).toBe(80);
+    expect(radiusKmLabel(100)).toBe(160);
+    expect(radiusKmLabel(250)).toBe(400);
   });
 });

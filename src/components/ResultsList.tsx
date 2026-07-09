@@ -4,8 +4,10 @@ import type { GeoPoint } from "../api/geocode";
 import { expandCondition } from "../lib/conditions";
 import { getLang, t, tn, useLang } from "../lib/i18n";
 import { href, useRoute } from "../lib/router";
+import { radiusKmLabel, useUnit } from "../lib/units";
 import { isWatched, unwatchSearch, watchKey, watchSearch, useWatchedSearches } from "../state/searches";
 import { TrialCard } from "./TrialCard";
+import { UnitToggle } from "./UnitToggle";
 
 function WatchButton() {
   const { params } = useRoute();
@@ -37,6 +39,7 @@ function WatchButton() {
 
 export function ResultsList() {
   useLang();
+  const unit = useUnit();
   const { params } = useRoute();
   const condition = params.get("cond") ?? "";
   const lat = params.get("lat");
@@ -125,13 +128,14 @@ export function ResultsList() {
   const backParams: Record<string, string> = {};
   params.forEach((v, k) => (backParams[k] = v));
 
+  const place =
+    locLabel === "your location" ? t("you (as in: near you)") : locLabel ?? t("your location");
   const whereLabel =
     from && radius
       ? " " +
-        t("within {r} miles of {place}", {
-          r: radius,
-          place: locLabel === "your location" ? t("you (as in: near you)") : locLabel ?? t("your location"),
-        })
+        (unit === "km"
+          ? t("within {r} km of {place}", { r: radiusKmLabel(parseInt(radius, 10)), place })
+          : t("within {r} miles of {place}", { r: radius, place }))
       : " " + t("worldwide");
 
   return (
@@ -141,7 +145,10 @@ export function ResultsList() {
           {t("Trials for")} <em>{condition}</em>
           {whereLabel}
         </h2>
-        <WatchButton />
+        <span className="results-header-actions">
+          <UnitToggle />
+          <WatchButton />
+        </span>
       </div>
       <div className="results-header-rest">
         {totalCount != null && (
