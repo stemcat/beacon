@@ -1,5 +1,7 @@
 /** Formatting helpers for registry data (statuses, phases, ages, dates). */
 
+import { t } from "./i18n";
+
 const STATUS_LABELS: Record<string, string> = {
   RECRUITING: "Recruiting now",
   NOT_YET_RECRUITING: "Opening soon",
@@ -14,7 +16,7 @@ const STATUS_LABELS: Record<string, string> = {
 
 export function formatStatus(status: string | undefined): string {
   if (!status) return "Status unknown";
-  return STATUS_LABELS[status] ?? titleCase(status);
+  return t(STATUS_LABELS[status] ?? titleCase(status));
 }
 
 export function statusTone(status: string | undefined): "good" | "warn" | "muted" {

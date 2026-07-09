@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { getBrowserLocation, geocodeSearch, type GeocodeResult } from "../api/geocode";
+import { suggestConditions } from "../lib/conditions";
+import { t, useLang } from "../lib/i18n";
 import { navigate } from "../lib/router";
 
 const COMMON_CONDITIONS = [
@@ -26,6 +28,7 @@ const RADII = [
 ];
 
 export function SearchWizard() {
+  useLang(); // re-render on language change
   const [step, setStep] = useState(0);
   const [condition, setCondition] = useState("");
   const [age, setAge] = useState("");
@@ -89,17 +92,16 @@ export function SearchWizard() {
         {["Condition", "About you", "Location"].map((label, i) => (
           <div key={label} className={`wizard-step-dot ${i === step ? "active" : ""} ${i < step ? "done" : ""}`}>
             <span className="dot" />
-            {label}
+            {t(label)}
           </div>
         ))}
       </div>
 
       {step === 0 && (
         <div className="wizard-step">
-          <h2>What condition are you looking into?</h2>
+          <h2>{t("What condition are you looking into?")}</h2>
           <p className="hint">
-            This can be for yourself or someone you care for. Type a condition, or pick a common
-            one below.
+            {t("This can be for yourself or someone you care for. Type a condition, or pick a common one below.")}
           </p>
           <input
             type="text"
@@ -108,8 +110,14 @@ export function SearchWizard() {
             onKeyDown={(e) => e.key === "Enter" && condition.trim() && setStep(1)}
             placeholder="e.g. breast cancer, type 2 diabetes, ALS…"
             aria-label="Medical condition"
+            list="condition-suggestions"
             autoFocus
           />
+          <datalist id="condition-suggestions">
+            {suggestConditions(condition).map((s) => (
+              <option key={s} value={s} />
+            ))}
+          </datalist>
           <div className="chips">
             {COMMON_CONDITIONS.map((c) => (
               <button
@@ -124,7 +132,7 @@ export function SearchWizard() {
           <div className="wizard-nav">
             <span />
             <button className="btn btn-primary" disabled={!condition.trim()} onClick={() => setStep(1)}>
-              Next
+              {t("Next")}
             </button>
           </div>
         </div>
@@ -132,13 +140,12 @@ export function SearchWizard() {
 
       {step === 1 && (
         <div className="wizard-step">
-          <h2>A little about the patient</h2>
+          <h2>{t("A little about the patient")}</h2>
           <p className="hint">
-            Optional — this helps us flag trials whose age or sex requirements don't match. Nothing
-            you enter leaves your device except to run the search.
+            {t("Optional — this helps us flag trials whose age or sex requirements don't match. Nothing you enter leaves your device except to run the search.")}
           </p>
           <label className="field">
-            <span>Age</span>
+            <span>{t("Age")}</span>
             <input
               type="number"
               min="0"
@@ -150,7 +157,7 @@ export function SearchWizard() {
             />
           </label>
           <fieldset className="field">
-            <legend>Sex assigned at birth</legend>
+            <legend>{t("Sex assigned at birth")}</legend>
             <div className="chips">
               {[
                 ["", "Prefer not to say"],
@@ -162,17 +169,17 @@ export function SearchWizard() {
                   className={`chip ${sex === value ? "chip-active" : ""}`}
                   onClick={() => setSex(value)}
                 >
-                  {label}
+                  {t(label)}
                 </button>
               ))}
             </div>
           </fieldset>
           <div className="wizard-nav">
             <button className="btn" onClick={() => setStep(0)}>
-              Back
+              {t("Back")}
             </button>
             <button className="btn btn-primary" onClick={() => setStep(2)}>
-              Next
+              {t("Next")}
             </button>
           </div>
         </div>
@@ -180,14 +187,14 @@ export function SearchWizard() {
 
       {step === 2 && (
         <div className="wizard-step">
-          <h2>Where should we look?</h2>
-          <p className="hint">Trials often require regular visits, so distance matters.</p>
+          <h2>{t("Where should we look?")}</h2>
+          <p className="hint">{t("Trials often require regular visits, so distance matters.")}</p>
           <label className="field">
-            <span>How far could you travel?</span>
+            <span>{t("How far could you travel?")}</span>
             <select value={radius} onChange={(e) => setRadius(Number(e.target.value))} aria-label="Search radius">
               {RADII.map((r) => (
                 <option key={r.value} value={r.value}>
-                  {r.label}
+                  {t(r.label)}
                 </option>
               ))}
             </select>
@@ -196,20 +203,20 @@ export function SearchWizard() {
           {radius !== 0 && (
             <>
               <button className="btn btn-primary btn-wide" onClick={useMyLocation} disabled={busy}>
-                📍 Use my current location & search
+                {t("📍 Use my current location & search")}
               </button>
-              <div className="or-divider">or</div>
+              <div className="or-divider">{t("or")}</div>
               <div className="field-row">
                 <input
                   type="text"
                   value={locationQuery}
                   onChange={(e) => setLocationQuery(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && searchLocation()}
-                  placeholder="City or postal code, e.g. Montreal"
+                  placeholder={t("City or postal code, e.g. Montreal")}
                   aria-label="City or postal code"
                 />
                 <button className="btn" onClick={searchLocation} disabled={busy || !locationQuery.trim()}>
-                  Find
+                  {t("Find")}
                 </button>
               </div>
               {locationResults.length > 0 && (
@@ -231,16 +238,16 @@ export function SearchWizard() {
 
           {radius === 0 && (
             <button className="btn btn-primary btn-wide" onClick={() => runSearch(null, 0)}>
-              Search everywhere
+              {t("Search everywhere")}
             </button>
           )}
 
           {error && <p className="error" role="alert">{error}</p>}
-          {busy && <p className="hint">Working…</p>}
+          {busy && <p className="hint">{t("Working…")}</p>}
 
           <div className="wizard-nav">
             <button className="btn" onClick={() => setStep(1)}>
-              Back
+              {t("Back")}
             </button>
             <span />
           </div>

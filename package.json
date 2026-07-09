@@ -10,7 +10,9 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "e2e": "vite-node scripts/e2e-live.ts"
+    "e2e": "vite-node scripts/e2e-live.ts",
+    "seo": "vite-node scripts/generate-seo.ts",
+    "build:launch": "npm run build && npm run seo"
   },
   "dependencies": {
     "react": "^19.1.0",

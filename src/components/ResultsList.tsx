@@ -1,10 +1,42 @@
 import { useEffect, useRef, useState } from "react";
 import { searchStudies, type Trial } from "../api/ctgov";
 import type { GeoPoint } from "../api/geocode";
+import { expandCondition } from "../lib/conditions";
+import { getLang, t, useLang } from "../lib/i18n";
 import { href, useRoute } from "../lib/router";
+import { isWatched, unwatchSearch, watchKey, watchSearch, useWatchedSearches } from "../state/searches";
 import { TrialCard } from "./TrialCard";
 
+function WatchButton() {
+  const { params } = useRoute();
+  useWatchedSearches(); // re-render when watch state changes
+  const cond = params.get("cond") ?? "";
+  if (!cond) return null;
+  const p = {
+    cond,
+    lat: params.get("lat"),
+    lng: params.get("lng"),
+    loc: params.get("loc"),
+    radius: params.get("radius"),
+    age: params.get("age"),
+    sex: params.get("sex"),
+  };
+  const key = watchKey(p);
+  const watched = isWatched(key);
+  return (
+    <button
+      className={`btn btn-small ${watched ? "btn-saved" : ""}`}
+      aria-pressed={watched}
+      onClick={() => (watched ? unwatchSearch(key) : void watchSearch(p))}
+      title="Beacon re-checks watched searches in your browser when you visit — nothing is sent to any server."
+    >
+      {watched ? t("🔔 Watching") : t("🔔 Watch this search")}
+    </button>
+  );
+}
+
 export function ResultsList() {
+  useLang();
   const { params } = useRoute();
   const condition = params.get("cond") ?? "";
   const lat = params.get("lat");
@@ -26,6 +58,7 @@ export function ResultsList() {
   const [error, setError] = useState("");
   const requestKey = useRef("");
 
+  const expanded = expandCondition(condition);
   const searchKey = [condition, lat, lng, radius].join("|");
 
   useEffect(() => {
@@ -37,7 +70,7 @@ export function ResultsList() {
     setNextToken(null);
     setTotalCount(null);
     searchStudies({
-      condition,
+      condition: expanded.query,
       lat: from?.lat,
       lng: from?.lng,
       radiusMiles: radius ? parseInt(radius, 10) : undefined,
@@ -63,7 +96,7 @@ export function ResultsList() {
     setLoadingMore(true);
     try {
       const res = await searchStudies({
-        condition,
+        condition: expanded.query,
         lat: from?.lat,
         lng: from?.lng,
         radiusMiles: radius ? parseInt(radius, 10) : undefined,
@@ -101,20 +134,32 @@ export function ResultsList() {
     <div className="results">
       <div className="results-header">
         <h2>
-          Trials for <em>{condition}</em>
+          {t("Trials for")} <em>{condition}</em>
           {whereLabel}
         </h2>
+        <WatchButton />
+      </div>
+      <div className="results-header-rest">
         {totalCount != null && (
           <p className="hint">
             {totalCount === 0
-              ? "No recruiting trials found."
+              ? t("No recruiting trials found.")
               : `${totalCount.toLocaleString()} recruiting ${totalCount === 1 ? "trial" : "trials"} found.`}{" "}
-            <a href="#/">Change search</a>
+            <a href="#/">{t("Change search")}</a>
+          </p>
+        )}
+        {getLang() !== "en" && (
+          <p className="hint">{t("Trial information from the registry is shown in English.")}</p>
+        )}
+        {expanded.added.length > 0 && (
+          <p className="hint expansion-note">
+            Also searching related medical terms: <strong>{expanded.added.join(", ")}</strong> —
+            doctors often register trials under these names.
           </p>
         )}
       </div>
 
-      {loading && <div className="loading" role="status">Searching the registry…</div>}
+      {loading && <div className="loading" role="status">{t("Searching the registry…")}</div>}
       {error && <p className="error" role="alert">{error}</p>}
 
       {!loading && totalCount === 0 && (
@@ -144,7 +189,7 @@ export function ResultsList() {
       {nextToken && !loading && (
         <div className="load-more">
           <button className="btn" onClick={loadMore} disabled={loadingMore}>
-            {loadingMore ? "Loading…" : "Show more trials"}
+            {loadingMore ? t("Loading…") : t("Show more trials")}
           </button>
         </div>
       )}

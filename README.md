@@ -17,10 +17,16 @@ Beacon is the missing translation layer. Every patient matched is a trial accele
 ## What makes it different
 
 - **Plain language everywhere.** Eligibility criteria are parsed into readable "you may/may not be able to join if…" checklists. Medical jargon gets tap-to-see explanations (60+ term glossary).
+- **Interactive self-check.** Mark each criterion "true for me / not true / not sure" — the "not sure" list becomes your agenda for the study team. Marks stay on your device.
+- **Speaks patient, searches doctor.** Lay vocabulary is widened into registry terms ("skin cancer" also searches melanoma, basal cell, squamous cell) — attacking the documented 57% discoverability gap.
 - **Distance that matters.** Sites are sorted by how far they are from *you*, because trials mean regular visits.
+- **Watched searches, zero servers.** Watch a search and Beacon re-checks it in your browser on every visit, flagging newly opened trials. Nobody — including us — knows what you're watching.
 - **Honest by design.** Beacon never determines eligibility, never editorializes efficacy, and links every trial to its official registry record. It flags trials whose age/sex requirements may not match — it doesn't hide them.
-- **Privacy is absolute.** There is no backend. Searches go straight from the browser to the public registry. No accounts, no analytics, no tracking, ever. Saved trials live in `localStorage` only.
+- **Privacy is absolute.** There is no backend. Searches go straight from the browser to the public registry. No accounts, no analytics, no tracking, ever. Saved trials live in `localStorage` only. The deploy configs ship a CSP that *technically enforces* this: the app can only talk to the registry and the geocoder.
 - **Built for the appointment.** Save promising trials, then print a summary — with registry IDs — to hand to your doctor. Plus an auto-generated "questions to ask" list tailored to each study.
+- **English, français, español.** UI chrome is fully translated (registry content remains English, clearly noted).
+- **Embeddable anywhere.** Advocacy orgs and clinics get a one-line `<script>` widget (`#/partners`) — zero-data, so there's nothing for their legal team to review.
+- **Findable.** `npm run seo` generates static plain-language pages for 72 conditions and ~2,000 trials (FAQ + MedicalStudy structured data, sitemap) — the programmatic SEO engine that makes Beacon discoverable where patients actually start: a search box.
 
 ## Architecture
 
@@ -46,13 +52,20 @@ src/
 
 ```bash
 npm install
-npm run dev        # local dev server
-npm test           # unit tests (parser, glossary, formatting)
-npm run e2e        # live smoke test against the real registry
-npm run build      # production build → dist/
+npm run dev            # local dev server
+npm test               # unit tests (parser, glossary, conditions, formatting)
+npm run e2e            # live smoke test against the real registry
+npm run build          # production build → dist/
+npm run seo            # generate static SEO pages into dist/ (set BEACON_BASE_URL)
+npm run build:launch   # build + SEO in one step
 ```
 
-Deploy `dist/` to any static host — Vercel, Netlify, GitHub Pages, Cloudflare Pages. No environment variables needed.
+## Launch checklist
+
+1. Push to GitHub — `.github/workflows/deploy.yml` deploys to GitHub Pages on every push and refreshes SEO pages weekly. Set the repo variable `BEACON_BASE_URL` to your production URL.
+2. Or connect the repo to **Netlify** (`netlify.toml` included) or **Vercel** (`vercel.json` included) — both ship privacy-enforcing security headers.
+3. Point a domain at it. Submit `sitemap.xml` in Google Search Console.
+4. Offer the widget (`/#/partners`) to advocacy orgs — it's the fastest distribution channel that doesn't depend on SEO.
 
 ## Strategy (updated after competitive research, July 2026)
 

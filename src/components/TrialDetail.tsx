@@ -12,6 +12,7 @@ import {
   statusTone,
   titleCase,
 } from "../lib/format";
+import { getLang, t, useLang } from "../lib/i18n";
 import { href, useRoute } from "../lib/router";
 import { isSaved, toggleSaved, useSavedTrials } from "../state/saved";
 import { Disclaimer } from "./Disclaimer";
@@ -43,6 +44,7 @@ function doctorQuestions(trial: Trial): string[] {
 }
 
 export function TrialDetail({ nctId }: { nctId: string }) {
+  useLang();
   const { params } = useRoute();
   useSavedTrials();
   const [trial, setTrial] = useState<Trial | null>(null);
@@ -86,7 +88,7 @@ export function TrialDetail({ nctId }: { nctId: string }) {
 
   return (
     <div className="trial-detail">
-      <a href={backHref} className="back-link">← Back to results</a>
+      <a href={backHref} className="back-link">{t("← Back to results")}</a>
 
       <div className="trial-card-badges">
         <span className={`badge badge-${statusTone(trial.overallStatus)}`}>{formatStatus(trial.overallStatus)}</span>
@@ -117,16 +119,20 @@ export function TrialDetail({ nctId }: { nctId: string }) {
           }
           aria-pressed={saved}
         >
-          {saved ? "★ Saved" : "☆ Save this trial"}
+          {saved ? t("★ Saved") : t("☆ Save this trial")}
         </button>
         <a className="btn" href={officialUrl(trial.nctId)} target="_blank" rel="noopener noreferrer">
-          View official record ↗
+          {t("View official record ↗")}
         </a>
       </div>
 
+      {getLang() !== "en" && (
+        <p className="hint">{t("Trial information from the registry is shown in English.")}</p>
+      )}
+
       {trial.briefSummary && (
         <section className="card detail-section">
-          <h3>What this study is about</h3>
+          <h3>{t("What this study is about")}</h3>
           <p className="summary-text">
             <AnnotatedText text={trial.briefSummary} />
           </p>
@@ -134,7 +140,7 @@ export function TrialDetail({ nctId }: { nctId: string }) {
       )}
 
       <section className="card detail-section">
-        <h3>At a glance</h3>
+        <h3>{t("At a glance")}</h3>
         <dl className="facts">
           <div><dt>Who can join</dt><dd>{formatAgeRange(trial.minimumAge, trial.maximumAge)} · {formatSex(trial.sex)}{trial.healthyVolunteers ? " · accepts healthy volunteers" : ""}</dd></div>
           {trial.conditions.length > 0 && <div><dt>Conditions</dt><dd>{trial.conditions.join(", ")}</dd></div>}
@@ -158,8 +164,8 @@ export function TrialDetail({ nctId }: { nctId: string }) {
 
       {trial.eligibilityCriteria && (
         <section className="card detail-section">
-          <h3>Can I join? Things the study team will check</h3>
-          <EligibilityChecklist criteria={trial.eligibilityCriteria} />
+          <h3>{t("Can I join? Things the study team will check")}</h3>
+          <EligibilityChecklist criteria={trial.eligibilityCriteria} nctId={trial.nctId} />
         </section>
       )}
 
@@ -194,7 +200,7 @@ export function TrialDetail({ nctId }: { nctId: string }) {
 
       {trial.centralContacts.length > 0 && (
         <section className="card detail-section">
-          <h3>Who to contact</h3>
+          <h3>{t("Who to contact")}</h3>
           <ul className="contact-list">
             {trial.centralContacts.map((c, i) => (
               <li key={i}>
@@ -213,7 +219,7 @@ export function TrialDetail({ nctId }: { nctId: string }) {
       )}
 
       <section className="card detail-section">
-        <h3>Questions to bring to your doctor</h3>
+        <h3>{t("Questions to bring to your doctor")}</h3>
         <ol className="question-list">
           {doctorQuestions(trial).map((q, i) => (
             <li key={i}>{q}</li>
@@ -227,7 +233,7 @@ export function TrialDetail({ nctId }: { nctId: string }) {
             navigator.clipboard?.writeText(text);
           }}
         >
-          Copy questions
+          {t("Copy questions")}
         </button>
       </section>
 

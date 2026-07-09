@@ -9,6 +9,7 @@ import {
   parseAgeYears,
   statusTone,
 } from "../lib/format";
+import { t } from "../lib/i18n";
 import { href } from "../lib/router";
 import { isSaved, toggleSaved, useSavedTrials } from "../state/saved";
 
@@ -104,7 +105,7 @@ export function TrialCard({ trial, from, age, sex, backParams }: Props) {
           }
           aria-pressed={saved}
         >
-          {saved ? "★ Saved" : "☆ Save"}
+          {saved ? t("★ Saved") : t("☆ Save")}
         </button>
       </div>
     </article>

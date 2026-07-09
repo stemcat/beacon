@@ -64,6 +64,8 @@ export interface SearchParams {
   radiusMiles?: number;
   pageToken?: string;
   pageSize?: number;
+  /** Extra registry field names beyond the card set (used by the SEO generator). */
+  extraFields?: string[];
 }
 
 export interface SearchResult {
@@ -175,7 +177,7 @@ export async function searchStudies(params: SearchParams): Promise<SearchResult>
       `distance(${params.lat.toFixed(4)},${params.lng.toFixed(4)},${params.radiusMiles}mi)`,
     );
   }
-  q.set("fields", SEARCH_FIELDS);
+  q.set("fields", [SEARCH_FIELDS, ...(params.extraFields ?? [])].join(","));
   q.set("pageSize", String(params.pageSize ?? 20));
   q.set("countTotal", "true");
   q.set("sort", "@relevance");
@@ -191,6 +193,27 @@ export async function searchStudies(params: SearchParams): Promise<SearchResult>
     totalCount: data.totalCount ?? null,
     nextPageToken: data.nextPageToken ?? null,
   };
+}
+
+/** Lightweight ID-only search used by watched-search new-trial detection. */
+export async function searchStudyIds(params: SearchParams): Promise<string[]> {
+  const q = new URLSearchParams();
+  q.set("query.cond", params.condition);
+  q.set("filter.overallStatus", "RECRUITING,NOT_YET_RECRUITING");
+  if (params.lat != null && params.lng != null && params.radiusMiles) {
+    q.set(
+      "filter.geo",
+      `distance(${params.lat.toFixed(4)},${params.lng.toFixed(4)},${params.radiusMiles}mi)`,
+    );
+  }
+  q.set("fields", "NCTId");
+  q.set("pageSize", "200");
+  const res = await fetch(`${BASE}/studies?${q}`);
+  if (!res.ok) throw new Error(`ClinicalTrials.gov returned ${res.status}.`);
+  const data = await res.json();
+  return (data.studies ?? [])
+    .map((s: any) => s?.protocolSection?.identificationModule?.nctId)
+    .filter(Boolean);
 }
 
 export async function getStudy(nctId: string): Promise<Trial> {
