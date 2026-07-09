@@ -1,9 +1,9 @@
 /** GET /api/alerts/confirm?token=... — activate a pending alert (double opt-in). */
 
-import { getSub, html, putSub, redisConfigured } from "../_shared.js";
+import { asVercel, getSub, html, putSub, redisConfigured } from "../_shared.js";
 
 
-export default async function handler(req: Request): Promise<Response> {
+async function handler(req: Request): Promise<Response> {
   if (!redisConfigured()) return html("<h2>Alerts aren't configured yet.</h2>", 503);
   const token = new URL(req.url).searchParams.get("token") ?? "";
   const sub = token ? await getSub(token) : null;
@@ -21,3 +21,5 @@ export default async function handler(req: Request): Promise<Response> {
       : `<h2>✅ Alert confirmed</h2><p>We'll email you when new trials open for <strong>${sub.cond}</strong>. Every email includes a one-click unsubscribe link.</p><p><a href="https://beacontrials.ca">← Back to Beacon</a></p>`,
   );
 }
+
+export default asVercel(handler);

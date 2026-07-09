@@ -10,7 +10,7 @@
  */
 
 import Anthropic from "@anthropic-ai/sdk";
-import { clientIp, env, json, rateLimit, redis, redisConfigured } from "./_shared.js";
+import { asVercel, clientIp, env, json, rateLimit, redis, redisConfigured } from "./_shared.js";
 
 
 const CACHE_VERSION = "v1";
@@ -62,7 +62,7 @@ async function sha256(text: string): Promise<string> {
   return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("").slice(0, 24);
 }
 
-export default async function handler(req: Request): Promise<Response> {
+async function handler(req: Request): Promise<Response> {
   if (req.method !== "GET") return json({ error: "method_not_allowed" }, 405);
   if (!env("ANTHROPIC_API_KEY")) return json({ error: "not_configured" }, 503);
 
@@ -138,3 +138,5 @@ export default async function handler(req: Request): Promise<Response> {
 
   return json({ nct, lang, cached: false, ...payload });
 }
+
+export default asVercel(handler);

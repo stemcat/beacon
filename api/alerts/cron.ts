@@ -5,6 +5,7 @@
  */
 
 import {
+  asVercel,
   deleteSub,
   emailConfigured,
   env,
@@ -63,7 +64,7 @@ async function fetchTitles(ids: string[]): Promise<Map<string, string>> {
   return titles;
 }
 
-export default async function handler(req: Request): Promise<Response> {
+async function handler(req: Request): Promise<Response> {
   const secret = env("CRON_SECRET");
   if (secret && req.headers.get("authorization") !== `Bearer ${secret}`) {
     return json({ error: "unauthorized" }, 401);
@@ -133,3 +134,5 @@ export default async function handler(req: Request): Promise<Response> {
 
   return json({ ok: true, subscriptions: tokens.length, checked, emailed, purged });
 }
+
+export default asVercel(handler);

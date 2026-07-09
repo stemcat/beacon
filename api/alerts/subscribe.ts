@@ -5,6 +5,7 @@
  */
 
 import {
+  asVercel,
   clientIp,
   emailConfigured,
   env,
@@ -41,7 +42,7 @@ const T = {
   },
 };
 
-export default async function handler(req: Request): Promise<Response> {
+async function handler(req: Request): Promise<Response> {
   if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405);
   if (!emailConfigured()) return json({ error: "not_configured" }, 503);
 
@@ -88,3 +89,5 @@ export default async function handler(req: Request): Promise<Response> {
 
   return json({ ok: true });
 }
+
+export default asVercel(handler);

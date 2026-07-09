@@ -17,6 +17,36 @@ declare const process: { env: Record<string, string | undefined> };
 
 export const env = (name: string): string | undefined => process.env[name];
 
+/**
+ * Adapt a web-standard (Request → Response) handler to Vercel's classic
+ * Node function signature — plain Vercel projects don't support web
+ * handlers on the Node runtime.
+ */
+export function asVercel(h: (req: Request) => Promise<Response>) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return async (req: any, res: any): Promise<void> => {
+    const proto = req.headers["x-forwarded-proto"] ?? "https";
+    const host = req.headers["x-forwarded-host"] ?? req.headers.host ?? "localhost";
+    const headers = new Headers();
+    for (const [k, v] of Object.entries(req.headers as Record<string, string | string[]>)) {
+      headers.set(k, Array.isArray(v) ? v.join(", ") : String(v));
+    }
+    const method: string = req.method ?? "GET";
+    const body =
+      method === "GET" || method === "HEAD"
+        ? undefined
+        : typeof req.body === "string"
+          ? req.body
+          : req.body != null
+            ? JSON.stringify(req.body)
+            : undefined;
+    const response = await h(new Request(`${proto}://${host}${req.url}`, { method, headers, body }));
+    res.statusCode = response.status;
+    response.headers.forEach((value: string, key: string) => res.setHeader(key, value));
+    res.end(new Uint8Array(await response.arrayBuffer()));
+  };
+}
+
 export function json(data: unknown, status = 200, headers: Record<string, string> = {}): Response {
   return new Response(JSON.stringify(data), {
     status,
