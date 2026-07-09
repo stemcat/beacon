@@ -1,0 +1,113 @@
+import { Disclaimer, PrivacyPromise } from "./components/Disclaimer";
+import { ResultsList } from "./components/ResultsList";
+import { SavedTrials } from "./components/SavedTrials";
+import { SearchWizard } from "./components/SearchWizard";
+import { TrialDetail } from "./components/TrialDetail";
+import { useRoute } from "./lib/router";
+import { useSavedTrials } from "./state/saved";
+
+function Home() {
+  return (
+    <div className="home">
+      <section className="hero">
+        <h1>
+          Somewhere, a trial is looking <span className="accent">for you.</span>
+        </h1>
+        <p className="hero-sub">
+          Every year, promising treatments stall because trials can't find participants — while
+          patients never hear about studies recruiting nearby. Beacon searches all{" "}
+          <strong>590,000+</strong> studies in the official registry and explains them in plain
+          language. Free, for everyone, forever.
+        </p>
+      </section>
+      <SearchWizard />
+      <PrivacyPromise />
+      <Disclaimer />
+    </div>
+  );
+}
+
+function About() {
+  return (
+    <div className="about">
+      <h2>Why Beacon exists</h2>
+      <div className="card detail-section">
+        <p>
+          Roughly <strong>80% of clinical trials are delayed</strong> because they can't recruit
+          enough participants, and fewer than 5% of eligible cancer patients ever join one. That's
+          not a lack of trials or a lack of willing patients — it's a discovery problem. The
+          official registry, ClinicalTrials.gov, is public and complete, but it was built for
+          researchers, not for a person who just got a diagnosis.
+        </p>
+        <p>
+          Beacon is the missing translation layer: the same official data, reshaped around the
+          questions patients actually have. <em>Is there a trial for my condition near me? Could I
+          qualify? What would it involve? Who do I call?</em>
+        </p>
+        <p>
+          Every patient matched is a trial accelerated — and every trial accelerated is a treatment
+          that arrives sooner for everyone.
+        </p>
+      </div>
+      <div className="card detail-section">
+        <h3>Our promises</h3>
+        <ul className="promise-list">
+          <li><strong>Free for patients, forever.</strong> No accounts, no paywalls.</li>
+          <li><strong>Privacy is absolute.</strong> Beacon has no servers. Your searches go directly from your browser to the public registry and nowhere else.</li>
+          <li><strong>No editorializing.</strong> We translate jargon; we never hype a treatment or hide a risk. Every trial links to its official record.</li>
+          <li><strong>Your doctor stays in charge.</strong> Beacon prepares you for a conversation — it never replaces one.</li>
+        </ul>
+      </div>
+      <div className="card detail-section">
+        <h3>Data source</h3>
+        <p>
+          All trial data comes live from{" "}
+          <a href="https://clinicaltrials.gov" target="_blank" rel="noopener noreferrer">
+            ClinicalTrials.gov
+          </a>
+          , the registry run by the U.S. National Library of Medicine, covering studies in more
+          than 200 countries. Location search is powered by OpenStreetMap Nominatim.
+        </p>
+      </div>
+      <Disclaimer />
+    </div>
+  );
+}
+
+export default function App() {
+  const route = useRoute();
+  const saved = useSavedTrials();
+
+  let view: React.ReactNode;
+  const trialMatch = route.path.match(/^\/trial\/(NCT\d+)$/i);
+  if (route.path === "/results") view = <ResultsList />;
+  else if (trialMatch) view = <TrialDetail nctId={trialMatch[1].toUpperCase()} />;
+  else if (route.path === "/saved") view = <SavedTrials />;
+  else if (route.path === "/about") view = <About />;
+  else view = <Home />;
+
+  return (
+    <div className="app">
+      <header className="topbar no-print">
+        <a href="#/" className="logo" aria-label="Beacon home">
+          <span className="logo-mark" aria-hidden="true">🔆</span> Beacon
+        </a>
+        <nav>
+          <a href="#/" className={route.path === "/" ? "active" : ""}>Search</a>
+          <a href="#/saved" className={route.path === "/saved" ? "active" : ""}>
+            Saved{saved.length > 0 ? ` (${saved.length})` : ""}
+          </a>
+          <a href="#/about" className={route.path === "/about" ? "active" : ""}>About</a>
+        </nav>
+      </header>
+      <main>{view}</main>
+      <footer className="footer no-print">
+        <p>
+          Beacon · free clinical trial finder · data live from{" "}
+          <a href="https://clinicaltrials.gov" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a>{" "}
+          · not medical advice · no tracking, ever
+        </p>
+      </footer>
+    </div>
+  );
+}
