@@ -2,6 +2,7 @@ import { Disclaimer, PrivacyPromise } from "./components/Disclaimer";
 import { ResultsList } from "./components/ResultsList";
 import { SavedTrials } from "./components/SavedTrials";
 import { SearchWizard } from "./components/SearchWizard";
+import { ContactForm } from "./components/ContactForm";
 import { Partners } from "./components/Partners";
 import { TrialDetail } from "./components/TrialDetail";
 import { WatchedSearches } from "./components/WatchedSearches";
@@ -73,9 +74,9 @@ function About() {
           {t(
             "Beacon is built and maintained by Kevin, in Montréal. People in his own family have had to search for treatment options the hard way — this is the tool he wished they'd had.",
           )}{" "}
-          {t("Questions, corrections, or partnership ideas:")}{" "}
-          <a href="mailto:kevin@beacontrials.ca">kevin@beacontrials.ca</a>
+          {t("Questions, corrections, or partnership ideas:")}
         </p>
+        <ContactForm />
       </div>
       <div className="card detail-section">
         <h3>{t("Data source")}</h3>

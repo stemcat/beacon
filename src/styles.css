@@ -114,7 +114,17 @@ main { flex: 1; width: 100%; max-width: 780px; margin: 0 auto; padding: 24px 20p
 .wizard-step h2 { margin: 6px 0 6px; font-size: 24px; letter-spacing: -0.02em; }
 .hint { color: var(--text-soft); font-size: 15px; }
 
-input[type="text"], input[type="number"], select {
+/* ---------- Contact form ---------- */
+.contact-form textarea {
+  width: 100%; padding: 13px 15px; font-size: 16px; font-family: inherit;
+  border: 1.5px solid var(--border); border-radius: 10px;
+  background: var(--bg); color: var(--text); resize: vertical; margin-top: 10px;
+}
+.contact-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 10px; }
+.contact-sent { font-weight: 600; }
+.hp-field { position: absolute !important; left: -9999px !important; height: 1px; width: 1px; opacity: 0; }
+
+input[type="text"], input[type="number"], input[type="email"], select {
   width: 100%; padding: 13px 15px; font-size: 17px;
   border: 1.5px solid var(--border); border-radius: 10px;
   background: var(--bg); color: var(--text);

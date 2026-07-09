@@ -109,7 +109,7 @@ export function emailConfigured(): boolean {
   return Boolean(env("RESEND_API_KEY") && redisConfigured());
 }
 
-export async function sendEmail(to: string, subject: string, htmlBody: string): Promise<void> {
+export async function sendEmail(to: string, subject: string, htmlBody: string, replyTo?: string): Promise<void> {
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
@@ -121,6 +121,7 @@ export async function sendEmail(to: string, subject: string, htmlBody: string): 
       to: [to],
       subject,
       html: htmlBody,
+      ...(replyTo ? { reply_to: replyTo } : {}),
     }),
   });
   if (!res.ok) throw new Error(`Resend error ${res.status}: ${await res.text()}`);
