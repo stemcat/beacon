@@ -22,7 +22,7 @@ Beacon is the missing translation layer. Every patient matched is a trial accele
 - **Distance that matters.** Sites are sorted by how far they are from *you*, because trials mean regular visits.
 - **Watched searches, zero servers.** Watch a search and Beacon re-checks it in your browser on every visit, flagging newly opened trials. Nobody — including us — knows what you're watching.
 - **Honest by design.** Beacon never determines eligibility, never editorializes efficacy, and links every trial to its official registry record. It flags trials whose age/sex requirements may not match — it doesn't hide them.
-- **Privacy is absolute.** There is no backend. Searches go straight from the browser to the public registry. No accounts, no analytics, no tracking, ever. Saved trials live in `localStorage` only. The deploy configs ship a CSP that *technically enforces* this: the app can only talk to the registry and the geocoder.
+- **Privacy is absolute.** Searches go straight from the browser to the public registry — no accounts, no analytics, no tracking, ever. Saved trials, self-check marks, and watched searches live in `localStorage` only. A CSP technically enforces the allowed destinations. The only server-side features are strictly opt-in (email alerts, the AI pre-screen, the contact form) and each states exactly what it touches.
 - **Built for the appointment.** Save promising trials, then print a summary — with registry IDs — to hand to your doctor. Plus an auto-generated "questions to ask" list tailored to each study.
 - **English, français, español.** UI chrome is fully translated (registry content remains English, clearly noted).
 - **Embeddable anywhere.** Advocacy orgs and clinics get a one-line `<script>` widget (`#/partners`) — zero-data, so there's nothing for their legal team to review.
@@ -67,7 +67,7 @@ Production: **https://beacontrials.ca** (Vercel; repo `stemcat/beacon`; `vercel.
 1. ~~Register `.ca` domain~~ ✅ `beacontrials.ca`
 2. ~~Deploy~~ ✅ Vercel, auto-deploys on push to `main`; app + widget + 2,794-URL bilingual sitemap verified live
 3. Once the domain is Valid in Vercel: set env var `BEACON_BASE_URL=https://beacontrials.ca` (pins canonicals — auto-detect picks Vercel's *shortest* custom domain, which a future redirect domain could hijack), then **redeploy once** so sitemap/canonical/hreflang switch from the vercel.app URL.
-4. Weekly SEO refresh: create a Vercel Deploy Hook (branch `main`) and save it as GitHub secret `VERCEL_DEPLOY_HOOK_URL` — `.github/workflows/weekly-refresh.yml` triggers it Mondays 06:00 UTC.
+4. Daily SEO refresh: create a Vercel Deploy Hook (branch `main`) and save it as GitHub secret `VERCEL_DEPLOY_HOOK_URL` — `.github/workflows/daily-refresh.yml` triggers it daily at 06:00 UTC.
 5. Google Search Console: add `beacontrials.ca` as a Domain property (DNS TXT), submit `https://beacontrials.ca/sitemap.xml`. Bonus: import into Bing Webmaster Tools (older demographic skews Bing).
 6. Offer the widget (`/#/partners`) to Canadian advocacy orgs first — MS Canada, Canadian Cancer Society, Diabetes Canada, and Quebec orgs where the French widget + Law 25 compliance is an unmatched pitch.
 7. Before promoting Spanish, have a native speaker review the ~160 strings in `src/lib/i18n.ts` (French is reviewed; Spanish is drafted).

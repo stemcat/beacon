@@ -1,5 +1,5 @@
-# Weekly SEO refresh: triggers a Vercel redeploy every Monday so the
-# generated condition/metro pages pick up newly opened trials.
+# Daily SEO refresh: triggers a Vercel redeploy so the generated
+# condition/metro pages pick up newly opened trials and drop closed ones.
 #
 # Setup (one time): in Vercel → Project → Settings → Git → Deploy Hooks,
 # create a hook for the main branch, then add its URL as a GitHub repo
@@ -7,13 +7,13 @@
 #
 # Also runs the test suite on every push so regressions are caught even
 # though Vercel does the deploying.
-name: CI + weekly SEO refresh
+name: CI + daily SEO refresh
 
 on:
   push:
     branches: [main]
   schedule:
-    - cron: "0 6 * * 1" # Mondays 06:00 UTC
+    - cron: "0 6 * * *" # daily 06:00 UTC (~1–2 a.m. Montréal)
   workflow_dispatch:
 
 jobs:
@@ -39,7 +39,7 @@ jobs:
           HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
         run: |
           if [ -z "$HOOK" ]; then
-            echo "::warning::VERCEL_DEPLOY_HOOK_URL secret not set — skipping weekly refresh. Create a Deploy Hook in Vercel and add it as a repo secret."
+            echo "::warning::VERCEL_DEPLOY_HOOK_URL secret not set — skipping daily refresh. Create a Deploy Hook in Vercel and add it as a repo secret."
             exit 0
           fi
           curl -sf -X POST "$HOOK" && echo "Redeploy triggered."
