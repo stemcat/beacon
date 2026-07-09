@@ -3,3 +3,5 @@ dist/
 screenshots/
 *.local
 .DS_Store
+.vercel
+.env*
