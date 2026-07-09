@@ -22,7 +22,7 @@ Beacon is the missing translation layer. Every patient matched is a trial accele
 - **Distance that matters.** Sites are sorted by how far they are from *you*, because trials mean regular visits.
 - **Watched searches, zero servers.** Watch a search and Beacon re-checks it in your browser on every visit, flagging newly opened trials. Nobody — including us — knows what you're watching.
 - **Honest by design.** Beacon never determines eligibility, never editorializes efficacy, and links every trial to its official registry record. It flags trials whose age/sex requirements may not match — it doesn't hide them.
-- **Privacy is absolute.** Searches go straight from the browser to the public registry — no accounts, no analytics, no tracking, ever. Saved trials, self-check marks, and watched searches live in `localStorage` only. A CSP technically enforces the allowed destinations. The only server-side features are strictly opt-in (email alerts, the AI pre-screen, the contact form) and each states exactly what it touches.
+- **Privacy is absolute.** Searches go straight from the browser to the public registry — no accounts, no analytics, no tracking, ever. Saved trials, self-check marks, and watched searches live in `localStorage` only. A CSP technically enforces the allowed destinations. The only server-side features are strictly opt-in (email alerts and the contact form) and each states exactly what it touches.
 - **Built for the appointment.** Save promising trials, then print a summary — with registry IDs — to hand to your doctor. Plus an auto-generated "questions to ask" list tailored to each study.
 - **English, français, español.** UI chrome is fully translated (registry content remains English, clearly noted).
 - **Embeddable anywhere.** Advocacy orgs and clinics get a one-line `<script>` widget (`#/partners`) — zero-data, so there's nothing for their legal team to review.
@@ -90,16 +90,14 @@ Roadmap status:
 2. ~~Zero-data embeddable widget~~ ✅ shipped (`#/partners`, leads with Law 25/PIPEDA)
 3. ~~Lay-vocabulary search expansion~~ ✅ shipped (EN + FR + ES condition names, accent-folded)
 4. ~~Multilingual UI~~ ✅ shipped (EN/FR reviewed; ES pending native review)
-5. **LLM eligibility pre-screening** — next major feature; unshipped industry-wide at full-registry scale (NIH's TrialGPT cut screening time 42.6% but shipped no patient product)
+5. **AI cross-trial screening** — deliberately deferred. A per-trial AI questionnaire was shipped, then removed: paraphrasing medical criteria risks false confidence and duplicated the verbatim self-check. If AI returns, it's as "answer once, screen all results" triage on the results page (the TrialGPT-validated pattern), reusing the public-text-only architecture in git history.
 6. Email alerts for new matching trials (needs a minimal backend; strictly opt-in) — interim: client-side watched searches, already shipped
 
 Deliberately **not** on the roadmap: sponsor-paid patient referrals. That model is why every competitor ends up with curated subsets and data collection. Beacon's long-term value is being the neutral, complete, private layer — trust is the moat.
 
-## Optional backend features (email alerts + AI pre-screen)
+## Optional backend features (email alerts + contact form)
 
 The core product needs no backend. Two opt-in features use Vercel Edge Functions in `api/`, and both stay dark (UI hidden, endpoints return 503) until configured:
-
-**AI pre-screen** (`/api/prescreen`) — converts a trial's public eligibility criteria into a plain-language yes/no questionnaire. Privacy architecture: **the model never sees the patient** — its only input is registry text; answers stay in the browser where matching runs. Results cache in Redis per trial+language forever, so cost scales with unique trials viewed, not users.
 
 **Email alerts** (`/api/alerts/*`) — double opt-in, daily cron (`vercel.json`), one-click unsubscribe that deletes everything. Stores only: email, the watched search, language, seen trial IDs. Unconfirmed signups auto-purge after 7 days.
 
@@ -110,8 +108,6 @@ Setup (all free tiers; add env vars in Vercel → Settings → Environment Varia
 | `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN` | [upstash.com](https://upstash.com) Redis (or Vercel Marketplace) | 10k commands/day |
 | `RESEND_API_KEY` | [resend.com](https://resend.com) — verify the beacontrials.ca domain (DNS records) | 3,000 emails/month |
 | `ALERTS_FROM_EMAIL` | e.g. `Beacon <alerts@beacontrials.ca>` | — |
-| `ANTHROPIC_API_KEY` | [console.anthropic.com](https://console.anthropic.com) — pay per use | ~$0.05/unique trial (Opus), cached forever |
-| `PRESCREEN_MODEL` | optional; default `claude-opus-4-8`; set `claude-haiku-4-5` for ~5× cheaper | — |
 | `CRON_SECRET` | any random string — Vercel uses it to authenticate the daily cron | — |
 
 ## The important disclaimer

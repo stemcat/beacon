@@ -313,10 +313,6 @@ input:focus, select:focus, button:focus-visible, a:focus-visible, .glossary-term
 .promise-list li { margin: 10px 0; }
 
 /* ---------- Pre-screen & alerts ---------- */
-.prescreen-criterion {
-  font-size: 12.5px; color: var(--text-soft); margin-top: 4px;
-  border-left: 2px solid var(--border); padding-left: 8px; font-style: italic;
-}
 .alert-subscribe { margin: 10px 0 4px; }
 .alert-subscribe-form { max-width: 460px; }
 .alert-subscribe-done { font-weight: 600; }

@@ -18,7 +18,7 @@ export function PrivacyPromise() {
     <p className="privacy-promise">
       🔒 <strong>{t("Your privacy is absolute.")}</strong>{" "}
       {t(
-        "The search runs entirely in your browser — your condition, age, and location go only to the public registry, never to us. No accounts, no tracking. The only exceptions are features you explicitly opt into: email alerts store your email and the watched search (nothing else), and the AI pre-screen reads only the trial's public text, never your answers.",
+        "The search runs entirely in your browser — your condition, age, and location go only to the public registry, never to us. No accounts, no tracking. The one exception is a feature you explicitly opt into: email alerts store your email and the watched search — nothing else.",
       )}
     </p>
   );

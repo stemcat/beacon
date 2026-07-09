@@ -18,7 +18,6 @@ import { isSaved, toggleSaved, useSavedTrials } from "../state/saved";
 import { Disclaimer } from "./Disclaimer";
 import { EligibilityChecklist } from "./EligibilityChecklist";
 import { AnnotatedText } from "./GlossaryTerm";
-import { PreScreen } from "./PreScreen";
 
 /** Questions worth asking, tailored to what the study record says. */
 function doctorQuestions(trial: Trial): string[] {
@@ -169,8 +168,6 @@ export function TrialDetail({ nctId }: { nctId: string }) {
           <EligibilityChecklist criteria={trial.eligibilityCriteria} nctId={trial.nctId} />
         </section>
       )}
-
-      {trial.eligibilityCriteria && <PreScreen nctId={trial.nctId} />}
 
       <section className="card detail-section">
         <h3>{t("Where this trial is running")} {sites.length > 0 ? `(${tn(sites.length, "{n} site", "{n} sites")})` : ""}</h3>

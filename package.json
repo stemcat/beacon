@@ -15,7 +15,6 @@
     "build:launch": "npm run build && npm run seo"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.110.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },

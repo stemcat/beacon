@@ -245,24 +245,6 @@ const FR: Dict = {
   "{n} new trial": "{n} nouvel essai",
   "Stop watching": "Ne plus surveiller",
 
-  // AI pre-screen
-  "Quick pre-screen — answer a few questions": "Pré-évaluation rapide — répondez à quelques questions",
-  "Beacon's AI turns this trial's criteria into simple yes/no questions you can answer about yourself. The AI never sees you — it only reads the trial's public text. Your answers stay on this device.":
-    "L'IA de Beacon transforme les critères de cet essai en questions simples (oui/non) auxquelles vous pouvez répondre vous-même. L'IA ne vous voit jamais — elle ne lit que le texte public de l'essai. Vos réponses restent sur cet appareil.",
-  "Start the pre-screen": "Commencer la pré-évaluation",
-  "Preparing your questions…": "Préparation de vos questions…",
-  "The pre-screen couldn't load right now — the full checklist above covers everything it would ask.":
-    "La pré-évaluation n'a pas pu se charger — la liste complète ci-dessus couvre tout ce qu'elle aurait demandé.",
-  "Yes": "Oui",
-  "No": "Non",
-  "{done} of {total} answered": "{done} réponses sur {total}",
-  "{n} answers may not line up with this trial's criteria — worth discussing; many criteria have exceptions":
-    "{n} réponses pourraient ne pas correspondre aux critères de cet essai — cela vaut la peine d'en discuter ; plusieurs critères comportent des exceptions",
-  '{n} marked "not sure" — bring these to the study team':
-    "{n} marquées « incertain » — apportez-les à l'équipe de l'étude",
-  "Only the study team can determine eligibility. This is preparation for that conversation, not a decision.":
-    "Seule l'équipe de l'étude peut déterminer l'admissibilité. Ceci prépare cette conversation, ce n'est pas une décision.",
-
   // Email alerts
   "Email me when new trials open": "M'écrire quand de nouveaux essais ouvrent",
   "your@email.com": "votre@courriel.com",
@@ -278,8 +260,8 @@ const FR: Dict = {
   "Whether a trial is right for you is a decision for you, your doctor, and the study team. Joining a trial is always voluntary, and you can leave one at any time. Trial details come from the official U.S. registry, ClinicalTrials.gov, and may change — always confirm with the study team.":
     "La décision de participer à un essai vous appartient, à vous, à votre médecin et à l'équipe de l'étude. La participation est toujours volontaire et vous pouvez vous retirer à tout moment. Les détails proviennent du registre officiel américain ClinicalTrials.gov et peuvent changer — confirmez toujours auprès de l'équipe de l'étude.",
   "Your privacy is absolute.": "Votre vie privée est absolue.",
-  "The search runs entirely in your browser — your condition, age, and location go only to the public registry, never to us. No accounts, no tracking. The only exceptions are features you explicitly opt into: email alerts store your email and the watched search (nothing else), and the AI pre-screen reads only the trial's public text, never your answers.":
-    "La recherche fonctionne entièrement dans votre navigateur — votre condition, votre âge et votre position ne vont qu'au registre public, jamais à nous. Pas de compte, pas de pistage. Les seules exceptions sont des options auxquelles vous adhérez explicitement : les alertes courriel conservent votre courriel et la recherche surveillée (rien d'autre), et la pré-évaluation par IA ne lit que le texte public de l'essai, jamais vos réponses.",
+  "The search runs entirely in your browser — your condition, age, and location go only to the public registry, never to us. No accounts, no tracking. The one exception is a feature you explicitly opt into: email alerts store your email and the watched search — nothing else.":
+    "La recherche fonctionne entièrement dans votre navigateur — votre condition, votre âge et votre position ne vont qu'au registre public, jamais à nous. Pas de compte, pas de pistage. La seule exception est une option à laquelle vous adhérez explicitement : les alertes courriel conservent votre courriel et la recherche surveillée — rien d'autre.",
 
   // About page
   "Why Beacon exists": "Pourquoi Beacon existe",
@@ -562,24 +544,6 @@ const ES: Dict = {
   "{n} new trial": "{n} ensayo nuevo",
   "Stop watching": "Dejar de vigilar",
 
-  // AI pre-screen
-  "Quick pre-screen — answer a few questions": "Preevaluación rápida — responda unas preguntas",
-  "Beacon's AI turns this trial's criteria into simple yes/no questions you can answer about yourself. The AI never sees you — it only reads the trial's public text. Your answers stay on this device.":
-    "La IA de Beacon convierte los criterios de este ensayo en preguntas simples (sí/no) que usted puede responder sobre sí mismo. La IA nunca lo ve — solo lee el texto público del ensayo. Sus respuestas se quedan en este dispositivo.",
-  "Start the pre-screen": "Comenzar la preevaluación",
-  "Preparing your questions…": "Preparando sus preguntas…",
-  "The pre-screen couldn't load right now — the full checklist above covers everything it would ask.":
-    "La preevaluación no pudo cargarse — la lista completa de arriba cubre todo lo que preguntaría.",
-  "Yes": "Sí",
-  "No": "No",
-  "{done} of {total} answered": "{done} de {total} respondidas",
-  "{n} answers may not line up with this trial's criteria — worth discussing; many criteria have exceptions":
-    "{n} respuestas podrían no coincidir con los criterios de este ensayo — vale la pena hablarlo; muchos criterios tienen excepciones",
-  '{n} marked "not sure" — bring these to the study team':
-    "{n} marcadas como «no estoy seguro» — llévelas al equipo del estudio",
-  "Only the study team can determine eligibility. This is preparation for that conversation, not a decision.":
-    "Solo el equipo del estudio puede determinar la elegibilidad. Esto es preparación para esa conversación, no una decisión.",
-
   // Email alerts
   "Email me when new trials open": "Avisarme por correo cuando abran nuevos ensayos",
   "your@email.com": "su@correo.com",
@@ -595,8 +559,8 @@ const ES: Dict = {
   "Whether a trial is right for you is a decision for you, your doctor, and the study team. Joining a trial is always voluntary, and you can leave one at any time. Trial details come from the official U.S. registry, ClinicalTrials.gov, and may change — always confirm with the study team.":
     "La decisión de participar en un ensayo les corresponde a usted, a su médico y al equipo del estudio. La participación siempre es voluntaria y puede retirarse en cualquier momento. Los detalles provienen del registro oficial de EE. UU., ClinicalTrials.gov, y pueden cambiar — confírmelos siempre con el equipo del estudio.",
   "Your privacy is absolute.": "Su privacidad es absoluta.",
-  "The search runs entirely in your browser — your condition, age, and location go only to the public registry, never to us. No accounts, no tracking. The only exceptions are features you explicitly opt into: email alerts store your email and the watched search (nothing else), and the AI pre-screen reads only the trial's public text, never your answers.":
-    "La búsqueda funciona completamente en su navegador — su condición, edad y ubicación van solo al registro público, nunca a nosotros. Sin cuentas, sin rastreo. Las únicas excepciones son funciones que usted activa explícitamente: las alertas por correo guardan su correo y la búsqueda vigilada (nada más), y la preevaluación con IA solo lee el texto público del ensayo, nunca sus respuestas.",
+  "The search runs entirely in your browser — your condition, age, and location go only to the public registry, never to us. No accounts, no tracking. The one exception is a feature you explicitly opt into: email alerts store your email and the watched search — nothing else.":
+    "La búsqueda funciona completamente en su navegador — su condición, edad y ubicación van solo al registro público, nunca a nosotros. Sin cuentas, sin rastreo. La única excepción es una función que usted activa explícitamente: las alertas por correo guardan su correo y la búsqueda vigilada — nada más.",
 
   // About page
   "Why Beacon exists": "Por qué existe Beacon",

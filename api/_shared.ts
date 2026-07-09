@@ -2,14 +2,12 @@
  * Shared helpers for Beacon's minimal backend (Vercel Functions (Node runtime)).
  *
  * Design constraints, in order: (1) the core product stays zero-data — these
- * endpoints exist only for strictly opt-in email alerts and for the AI
- * pre-screen, which reads ONLY public registry text, never patient input;
+ * endpoints exist only for strictly opt-in email alerts and the contact form;
  * (2) every external service is optional — endpoints degrade to 503
  * "not configured" instead of crashing when env vars are absent.
  *
  * Env vars: UPSTASH_REDIS_REST_URL, UPSTASH_REDIS_REST_TOKEN (storage),
- * RESEND_API_KEY, ALERTS_FROM_EMAIL (email), ANTHROPIC_API_KEY (+ optional
- * PRESCREEN_MODEL) for the pre-screen, CRON_SECRET (cron auth).
+ * RESEND_API_KEY, ALERTS_FROM_EMAIL, CONTACT_TO_EMAIL (email), CRON_SECRET.
  */
 
 
