@@ -12,7 +12,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { clientIp, env, json, rateLimit, redis, redisConfigured } from "./_shared";
 
-export const config = { runtime: "edge" };
 
 const CACHE_VERSION = "v1";
 const MAX_CRITERIA_CHARS = 20_000;

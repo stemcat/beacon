@@ -1,5 +1,5 @@
 /**
- * Shared helpers for Beacon's minimal backend (Vercel Edge Functions).
+ * Shared helpers for Beacon's minimal backend (Vercel Functions (Node runtime)).
  *
  * Design constraints, in order: (1) the core product stays zero-data — these
  * endpoints exist only for strictly opt-in email alerts and for the AI
@@ -12,7 +12,6 @@
  * PRESCREEN_MODEL) for the pre-screen, CRON_SECRET (cron auth).
  */
 
-export const config = { runtime: "edge" };
 
 declare const process: { env: Record<string, string | undefined> };
 

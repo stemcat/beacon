@@ -18,7 +18,6 @@ import {
   type AlertSub,
 } from "../_shared";
 
-export const config = { runtime: "edge" };
 
 const T = {
   en: {

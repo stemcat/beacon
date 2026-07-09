@@ -2,7 +2,6 @@
 
 import { deleteSub, getSub, html, redisConfigured } from "../_shared";
 
-export const config = { runtime: "edge" };
 
 export default async function handler(req: Request): Promise<Response> {
   if (!redisConfigured()) return html("<h2>Alerts aren't configured yet.</h2>", 503);
