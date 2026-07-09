@@ -29,7 +29,12 @@ import { parseEligibility } from "../src/lib/eligibility";
 import { formatAgeRange, formatPhases, formatSex, formatStatus } from "../src/lib/format";
 
 const DIST = join(process.cwd(), "dist");
-const BASE_URL = (process.env.BEACON_BASE_URL ?? "").replace(/\/$/, "");
+// Explicit BEACON_BASE_URL wins; on Vercel, fall back to the project's
+// production domain so sitemap/canonical/hreflang work with zero config.
+const BASE_URL = (
+  process.env.BEACON_BASE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "")
+).replace(/\/$/, "");
 const METRO_RADIUS_MILES = 100;
 
 type PageLang = "en" | "fr";

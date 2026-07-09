@@ -1,4 +1,6 @@
 {
+  "buildCommand": "npm run build && npm run seo",
+  "outputDirectory": "dist",
   "headers": [
     {
       "source": "/(.*)",

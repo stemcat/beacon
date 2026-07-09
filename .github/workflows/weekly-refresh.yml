@@ -1,0 +1,45 @@
+# Weekly SEO refresh: triggers a Vercel redeploy every Monday so the
+# generated condition/metro pages pick up newly opened trials.
+#
+# Setup (one time): in Vercel → Project → Settings → Git → Deploy Hooks,
+# create a hook for the main branch, then add its URL as a GitHub repo
+# secret named VERCEL_DEPLOY_HOOK_URL.
+#
+# Also runs the test suite on every push so regressions are caught even
+# though Vercel does the deploying.
+name: CI + weekly SEO refresh
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 6 * * 1" # Mondays 06:00 UTC
+  workflow_dispatch:
+
+jobs:
+  test:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+
+  refresh:
+    if: github.event_name != 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Vercel redeploy
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "::warning::VERCEL_DEPLOY_HOOK_URL secret not set — skipping weekly refresh. Create a Deploy Hook in Vercel and add it as a repo secret."
+            exit 0
+          fi
+          curl -sf -X POST "$HOOK" && echo "Redeploy triggered."
