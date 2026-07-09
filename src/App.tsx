@@ -71,7 +71,7 @@ function About() {
         <h3>{t("Data source")}</h3>
         <p>
           {t(
-            "All trial data comes live from ClinicalTrials.gov, the registry run by the U.S. National Library of Medicine, covering studies in more than 200 countries. Location search is powered by OpenStreetMap Nominatim.",
+            "All trial data comes live from ClinicalTrials.gov, the registry run by the U.S. National Library of Medicine, covering studies in more than 200 countries. Location search is powered by OpenStreetMap Nominatim and, for Canadian postal codes, Zippopotam — only the first three characters of a postal code are ever sent.",
           )}{" "}
           <a href="https://clinicaltrials.gov" target="_blank" rel="noopener noreferrer">
             ClinicalTrials.gov ↗
@@ -123,7 +123,7 @@ export default function App() {
       </header>
       <main>{view}</main>
       <footer className="footer no-print">
-        <p>{t("🍁 Made in Canada · English & French · includes trials on both sides of the border")}</p>
+        <p>{t("🍁 Made in Montréal, Canada — trials on both sides of the border")}</p>
         <p>
           Beacon · {t("free clinical trial finder")} · {t("data live from")}{" "}
           <a href="https://clinicaltrials.gov" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a>{" "}

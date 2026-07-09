@@ -28,7 +28,41 @@ export function getBrowserLocation(): Promise<GeoPoint> {
   });
 }
 
+/** Canadian postal code, full ("H2X 1Y4") or FSA-only ("H2X"). */
+const CA_POSTAL = /^([A-Za-z]\d[A-Za-z])\s*(?:\d[A-Za-z]\d)?$/;
+
+/**
+ * Resolve a Canadian postal code via its FSA (first three characters).
+ * OpenStreetMap's Canadian postal coverage is patchy — perfectly valid codes
+ * like "K1A 0B1" or "T5J 3N4" return nothing — while Zippopotam carries the
+ * complete FSA set. Privacy bonus: only the 3-character FSA (a neighbourhood,
+ * ~thousands of households) ever leaves the browser, never the full code.
+ */
+async function geocodeCanadianFsa(fsa: string): Promise<GeocodeResult[]> {
+  const res = await fetch(`https://api.zippopotam.us/CA/${encodeURIComponent(fsa.toUpperCase())}`, {
+    headers: { Accept: "application/json" },
+  });
+  if (!res.ok) return [];
+  const data: { places?: Array<{ "place name": string; "state abbreviation": string; latitude: string; longitude: string }> } =
+    await res.json();
+  const place = data.places?.[0];
+  if (!place) return [];
+  return [
+    {
+      lat: parseFloat(place.latitude),
+      lng: parseFloat(place.longitude),
+      displayName: `${place["place name"]}, ${place["state abbreviation"]}, Canada`,
+    },
+  ];
+}
+
 export async function geocodeSearch(query: string): Promise<GeocodeResult[]> {
+  const postal = query.trim().match(CA_POSTAL);
+  if (postal) {
+    const results = await geocodeCanadianFsa(postal[1]).catch(() => []);
+    if (results.length > 0) return results;
+    // Fall through to Nominatim if the FSA lookup finds nothing.
+  }
   const q = new URLSearchParams({
     format: "jsonv2",
     q: query,

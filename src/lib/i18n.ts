@@ -273,12 +273,12 @@ const FR: Dict = {
   "Beacon prepares you for a conversation — it never replaces one.":
     "Beacon vous prépare à une conversation — il ne la remplace jamais.",
   "Data source": "Source des données",
-  "All trial data comes live from ClinicalTrials.gov, the registry run by the U.S. National Library of Medicine, covering studies in more than 200 countries. Location search is powered by OpenStreetMap Nominatim.":
-    "Toutes les données des essais proviennent en direct de ClinicalTrials.gov, le registre géré par la National Library of Medicine des États-Unis, qui couvre des études dans plus de 200 pays. La recherche de lieux est assurée par OpenStreetMap Nominatim.",
+  "All trial data comes live from ClinicalTrials.gov, the registry run by the U.S. National Library of Medicine, covering studies in more than 200 countries. Location search is powered by OpenStreetMap Nominatim and, for Canadian postal codes, Zippopotam — only the first three characters of a postal code are ever sent.":
+    "Toutes les données des essais proviennent en direct de ClinicalTrials.gov, le registre géré par la National Library of Medicine des États-Unis, qui couvre des études dans plus de 200 pays. La recherche de lieux est assurée par OpenStreetMap Nominatim et, pour les codes postaux canadiens, par Zippopotam — seuls les trois premiers caractères du code postal sont transmis.",
 
   // Canadian positioning
-  "🍁 Made in Canada · English & French · includes trials on both sides of the border":
-    "🍁 Fait au Canada · français et anglais · inclut les essais des deux côtés de la frontière",
+  "🍁 Made in Montréal, Canada — trials on both sides of the border":
+    "🍁 Conçu à Montréal, Canada — des essais des deux côtés de la frontière",
   "Beacon is built in Canada, in both official languages. Trials don't stop at the border — searches near you include sites on both sides, because the closest option for a Canadian patient is sometimes across it.":
     "Beacon est conçu au Canada, dans les deux langues officielles. Les essais ne s'arrêtent pas à la frontière — les recherches près de chez vous incluent les sites des deux côtés, parce que l'option la plus proche pour un patient canadien se trouve parfois de l'autre côté.",
   "Because Beacon collects zero personal data, it is compliant by design with Quebec's Law 25 and PIPEDA — there is nothing for your privacy officer to assess.":
@@ -550,12 +550,12 @@ const ES: Dict = {
   "Beacon prepares you for a conversation — it never replaces one.":
     "Beacon lo prepara para una conversación — nunca la reemplaza.",
   "Data source": "Fuente de los datos",
-  "All trial data comes live from ClinicalTrials.gov, the registry run by the U.S. National Library of Medicine, covering studies in more than 200 countries. Location search is powered by OpenStreetMap Nominatim.":
-    "Todos los datos de los ensayos provienen en vivo de ClinicalTrials.gov, el registro administrado por la Biblioteca Nacional de Medicina de EE. UU., que cubre estudios en más de 200 países. La búsqueda de ubicaciones funciona con OpenStreetMap Nominatim.",
+  "All trial data comes live from ClinicalTrials.gov, the registry run by the U.S. National Library of Medicine, covering studies in more than 200 countries. Location search is powered by OpenStreetMap Nominatim and, for Canadian postal codes, Zippopotam — only the first three characters of a postal code are ever sent.":
+    "Todos los datos de los ensayos provienen en vivo de ClinicalTrials.gov, el registro administrado por la Biblioteca Nacional de Medicina de EE. UU., que cubre estudios en más de 200 países. La búsqueda de ubicaciones funciona con OpenStreetMap Nominatim y, para códigos postales canadienses, con Zippopotam — solo se envían los tres primeros caracteres del código postal.",
 
   // Canadian positioning
-  "🍁 Made in Canada · English & French · includes trials on both sides of the border":
-    "🍁 Hecho en Canadá · inglés y francés · incluye ensayos a ambos lados de la frontera",
+  "🍁 Made in Montréal, Canada — trials on both sides of the border":
+    "🍁 Hecho en Montreal, Canadá — ensayos a ambos lados de la frontera",
   "Beacon is built in Canada, in both official languages. Trials don't stop at the border — searches near you include sites on both sides, because the closest option for a Canadian patient is sometimes across it.":
     "Beacon está hecho en Canadá, en los dos idiomas oficiales. Los ensayos no se detienen en la frontera — las búsquedas cercanas incluyen centros de ambos lados, porque la opción más cercana para un paciente canadiense a veces está al otro lado.",
   "Because Beacon collects zero personal data, it is compliant by design with Quebec's Law 25 and PIPEDA — there is nothing for your privacy officer to assess.":
