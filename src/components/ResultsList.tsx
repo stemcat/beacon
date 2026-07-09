@@ -6,6 +6,7 @@ import { getLang, t, tn, useLang } from "../lib/i18n";
 import { href, useRoute } from "../lib/router";
 import { radiusKmLabel, useUnit } from "../lib/units";
 import { isWatched, unwatchSearch, watchKey, watchSearch, useWatchedSearches } from "../state/searches";
+import { AlertSubscribe } from "./AlertSubscribe";
 import { TrialCard } from "./TrialCard";
 import { UnitToggle } from "./UnitToggle";
 
@@ -161,6 +162,9 @@ export function ResultsList() {
         )}
         {getLang() !== "en" && (
           <p className="hint">{t("Trial information from the registry is shown in English.")}</p>
+        )}
+        {totalCount != null && totalCount > 0 && (
+          <AlertSubscribe cond={condition} lat={lat} lng={lng} loc={locLabel} radius={radius} />
         )}
         {expanded.added.length > 0 && (
           <p className="hint expansion-note">

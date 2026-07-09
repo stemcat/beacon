@@ -62,7 +62,7 @@ function About() {
         <h3>{t("Our promises")}</h3>
         <ul className="promise-list">
           <li><strong>{t("Free for patients, forever.")}</strong> {t("No accounts, no paywalls.")}</li>
-          <li><strong>{t("Your privacy is absolute.")}</strong> {t("Beacon has no servers. Your searches go directly from your browser to the public registry and nowhere else.")}</li>
+          <li><strong>{t("Your privacy is absolute.")}</strong> {t("Your searches go directly from your browser to the public registry — we never see them. We store something only when you explicitly ask us to: an email alert keeps your email and the watched search, and nothing else.")}</li>
           <li><strong>{t("No editorializing.")}</strong> {t("We translate jargon; we never hype a treatment or hide a risk. Every trial links to its official record.")}</li>
           <li><strong>{t("Your doctor stays in charge.")}</strong> {t("Beacon prepares you for a conversation — it never replaces one.")}</li>
         </ul>

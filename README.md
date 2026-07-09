@@ -95,6 +95,25 @@ Roadmap status:
 
 Deliberately **not** on the roadmap: sponsor-paid patient referrals. That model is why every competitor ends up with curated subsets and data collection. Beacon's long-term value is being the neutral, complete, private layer — trust is the moat.
 
+## Optional backend features (email alerts + AI pre-screen)
+
+The core product needs no backend. Two opt-in features use Vercel Edge Functions in `api/`, and both stay dark (UI hidden, endpoints return 503) until configured:
+
+**AI pre-screen** (`/api/prescreen`) — converts a trial's public eligibility criteria into a plain-language yes/no questionnaire. Privacy architecture: **the model never sees the patient** — its only input is registry text; answers stay in the browser where matching runs. Results cache in Redis per trial+language forever, so cost scales with unique trials viewed, not users.
+
+**Email alerts** (`/api/alerts/*`) — double opt-in, daily cron (`vercel.json`), one-click unsubscribe that deletes everything. Stores only: email, the watched search, language, seen trial IDs. Unconfirmed signups auto-purge after 7 days.
+
+Setup (all free tiers; add env vars in Vercel → Settings → Environment Variables):
+
+| Env var | Service | Free tier |
+|---|---|---|
+| `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN` | [upstash.com](https://upstash.com) Redis (or Vercel Marketplace) | 10k commands/day |
+| `RESEND_API_KEY` | [resend.com](https://resend.com) — verify the beacontrials.ca domain (DNS records) | 3,000 emails/month |
+| `ALERTS_FROM_EMAIL` | e.g. `Beacon <alerts@beacontrials.ca>` | — |
+| `ANTHROPIC_API_KEY` | [console.anthropic.com](https://console.anthropic.com) — pay per use | ~$0.05/unique trial (Opus), cached forever |
+| `PRESCREEN_MODEL` | optional; default `claude-opus-4-8`; set `claude-haiku-4-5` for ~5× cheaper | — |
+| `CRON_SECRET` | any random string — Vercel uses it to authenticate the daily cron | — |
+
 ## The important disclaimer
 
 Beacon is an information tool, **not medical advice**. Whether a trial is right for you is a decision for you, your doctor, and the study team. Trial data comes from ClinicalTrials.gov and may change; always confirm details with the study team.

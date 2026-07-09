@@ -18,7 +18,7 @@ export function PrivacyPromise() {
     <p className="privacy-promise">
       🔒 <strong>{t("Your privacy is absolute.")}</strong>{" "}
       {t(
-        "Beacon runs entirely in your browser. Your condition, age, and location are sent only to the public registry to run your search — never to us. We have no servers, no accounts, and no tracking.",
+        "The search runs entirely in your browser — your condition, age, and location go only to the public registry, never to us. No accounts, no tracking. The only exceptions are features you explicitly opt into: email alerts store your email and the watched search (nothing else), and the AI pre-screen reads only the trial's public text, never your answers.",
       )}
     </p>
   );

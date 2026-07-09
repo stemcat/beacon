@@ -1,6 +1,7 @@
 {
   "buildCommand": "npm run build && npm run seo",
   "outputDirectory": "dist",
+  "crons": [{ "path": "/api/alerts/cron", "schedule": "0 12 * * *" }],
   "headers": [
     {
       "source": "/(.*)",
