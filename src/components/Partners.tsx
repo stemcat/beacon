@@ -20,7 +20,12 @@ export function Partners() {
         <p>
           {t(
             "If you run a patient advocacy organization, clinic, or health community, you can embed Beacon's live trial list for your condition. It updates itself from ClinicalTrials.gov, costs nothing, and — because it collects zero data about your visitors (no cookies, no accounts, no analytics) — there's nothing for your privacy or legal team to review.",
-          )}
+          )}{" "}
+          <strong>
+            {t(
+              "Because Beacon collects zero personal data, it is compliant by design with Quebec's Law 25 and PIPEDA — there is nothing for your privacy officer to assess.",
+            )}
+          </strong>
         </p>
         <label className="field">
           <span>{t("Condition to feature")}</span>

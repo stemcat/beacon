@@ -52,6 +52,11 @@ function About() {
             "Every patient matched is a trial accelerated — and every trial accelerated is a treatment that arrives sooner for everyone.",
           )}
         </p>
+        <p>
+          {t(
+            "Beacon is built in Canada, in both official languages. Trials don't stop at the border — searches near you include sites on both sides, because the closest option for a Canadian patient is sometimes across it.",
+          )}
+        </p>
       </div>
       <div className="card detail-section">
         <h3>{t("Our promises")}</h3>
@@ -118,6 +123,7 @@ export default function App() {
       </header>
       <main>{view}</main>
       <footer className="footer no-print">
+        <p>{t("🍁 Made in Canada · English & French · includes trials on both sides of the border")}</p>
         <p>
           Beacon · {t("free clinical trial finder")} · {t("data live from")}{" "}
           <a href="https://clinicaltrials.gov" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a>{" "}

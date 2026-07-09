@@ -66,6 +66,8 @@ export interface SearchParams {
   pageSize?: number;
   /** Extra registry field names beyond the card set (used by the SEO generator). */
   extraFields?: string[];
+  /** Restrict to trials with at least one site in this country (query.locn). */
+  locationCountry?: string;
 }
 
 export interface SearchResult {
@@ -171,6 +173,7 @@ export async function searchStudies(params: SearchParams): Promise<SearchResult>
   const q = new URLSearchParams();
   q.set("query.cond", params.condition);
   q.set("filter.overallStatus", "RECRUITING,NOT_YET_RECRUITING");
+  if (params.locationCountry) q.set("query.locn", params.locationCountry);
   if (params.lat != null && params.lng != null && params.radiusMiles) {
     q.set(
       "filter.geo",

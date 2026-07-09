@@ -60,25 +60,34 @@ npm run seo            # generate static SEO pages into dist/ (set BEACON_BASE_U
 npm run build:launch   # build + SEO in one step
 ```
 
-## Launch checklist
+## Launch checklist (Canada-first)
 
-1. Push to GitHub — `.github/workflows/deploy.yml` deploys to GitHub Pages on every push and refreshes SEO pages weekly. Set the repo variable `BEACON_BASE_URL` to your production URL.
-2. Or connect the repo to **Netlify** (`netlify.toml` included) or **Vercel** (`vercel.json` included) — both ship privacy-enforcing security headers.
-3. Point a domain at it. Submit `sitemap.xml` in Google Search Console.
-4. Offer the widget (`/#/partners`) to advocacy orgs — it's the fastest distribution channel that doesn't depend on SEO.
+1. Register a **`.ca` domain** (Canadian trust signal + local SEO). Suggestions: `beacontrials.ca`, `getbeacon.ca`, `essaiscliniques.ca` as a French alias.
+2. Push to GitHub — `.github/workflows/deploy.yml` deploys to GitHub Pages on every push and refreshes SEO pages weekly. Set the repo variable `BEACON_BASE_URL` to the production URL. (Or connect to **Netlify**/**Vercel** — configs included, both ship privacy-enforcing security headers.)
+3. Submit `sitemap.xml` in Google Search Console (covers both `/c/…` English and `/fr/c/…` French pages, hreflang-paired).
+4. Offer the widget (`/#/partners`) to Canadian advocacy orgs first — MS Canada, Canadian Cancer Society, Diabetes Canada, and Quebec orgs where the French widget + Law 25 compliance is an unmatched pitch.
+5. Before promoting Spanish, have a native speaker review the ~160 strings in `src/lib/i18n.ts` (French is reviewed; Spanish is drafted).
 
 ## Strategy (updated after competitive research, July 2026)
 
 Every funded competitor (Power ~31k trials, Massive Bio ~19k, Leal Health ~20k, TrialFinderData ~8k) covers a **curated subset** of the registry — because their referral/recruitment business models only monetize trials they have relationships with. Nobody offers **full-registry coverage + per-trial plain-language translation + zero data collection**. That combination is Beacon's identity, and it is structurally hard for referral businesses to copy without breaking their own economics. Peer-reviewed evidence says the default destination fails patients: 57% of eligible trials were not discoverable via ClinicalTrials.gov's own search even though they were listed there (PMC12193830).
 
-Roadmap, in order:
+**Go-to-market: Canada-first.** The product stays global (cross-border trials are often a Canadian patient's nearest option — the search deliberately includes US border sites), but every distribution surface targets Canada:
 
-1. **Distribution via programmatic SEO** — pre-render plain-language pages per condition × region from the live registry. The static architecture makes this nearly free; a smaller player (TrialFinderData) is validating the channel at ~8k-trial scale.
-2. **Zero-data embeddable widget** for patient advocacy orgs and clinics — Antidote proved the widget channel with 300+ partners; a widget that collects nothing needs no privacy/legal review to adopt.
-3. **Lay-vocabulary search expansion** ("skin cancer" → melanoma, basal cell…) — directly attacks the 57%-undiscoverable problem, which is largely a query-formulation failure.
-4. **LLM eligibility pre-screening** ("answer 5 questions to see which criteria may apply") — NIH's TrialGPT research cut screening time 42.6% but shipped no patient product; this remains unshipped industry-wide at full-registry scale.
-5. **Multilingual UI** — discovery gaps are worst for non-English speakers; no competitor leads here.
-6. Email alerts for new matching trials (needs a minimal backend; strictly opt-in, holds only an email + a search query).
+- **3,590 recruiting trials** currently have a Canadian site (1,358 in Quebec) — real inventory, and Health Canada requires registration in ClinicalTrials.gov, so coverage is complete.
+- **Every funded competitor is US-centric and English-only.** Nobody competes for "essais cliniques cancer du sein Montréal" — or seriously for "clinical trials Toronto."
+- **The bilingual UI is a structural moat in Quebec**, where French capability is a requirement for health organizations, and US competitors won't build it for 8M people.
+- **Quebec's Law 25 + PIPEDA favor us by design:** the zero-data widget is the only one a Canadian clinic can embed with nothing for their privacy officer to review.
+- The SEO generator emits **bilingual pages**: 72 Canada-national condition pages + 30 conditions × 12 metros, in English and French with hreflang pairing.
+
+Roadmap status:
+
+1. ~~Programmatic SEO~~ ✅ shipped (Canada-first, bilingual)
+2. ~~Zero-data embeddable widget~~ ✅ shipped (`#/partners`, leads with Law 25/PIPEDA)
+3. ~~Lay-vocabulary search expansion~~ ✅ shipped (EN + FR + ES condition names, accent-folded)
+4. ~~Multilingual UI~~ ✅ shipped (EN/FR reviewed; ES pending native review)
+5. **LLM eligibility pre-screening** — next major feature; unshipped industry-wide at full-registry scale (NIH's TrialGPT cut screening time 42.6% but shipped no patient product)
+6. Email alerts for new matching trials (needs a minimal backend; strictly opt-in) — interim: client-side watched searches, already shipped
 
 Deliberately **not** on the roadmap: sponsor-paid patient referrals. That model is why every competitor ends up with curated subsets and data collection. Beacon's long-term value is being the neutral, complete, private layer — trust is the moat.
 

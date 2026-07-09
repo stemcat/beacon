@@ -275,6 +275,14 @@ const FR: Dict = {
   "All trial data comes live from ClinicalTrials.gov, the registry run by the U.S. National Library of Medicine, covering studies in more than 200 countries. Location search is powered by OpenStreetMap Nominatim.":
     "Toutes les données des essais proviennent en direct de ClinicalTrials.gov, le registre géré par la National Library of Medicine des États-Unis, qui couvre des études dans plus de 200 pays. La recherche de lieux est assurée par OpenStreetMap Nominatim.",
 
+  // Canadian positioning
+  "🍁 Made in Canada · English & French · includes trials on both sides of the border":
+    "🍁 Fait au Canada · français et anglais · inclut les essais des deux côtés de la frontière",
+  "Beacon is built in Canada, in both official languages. Trials don't stop at the border — searches near you include sites on both sides, because the closest option for a Canadian patient is sometimes across it.":
+    "Beacon est conçu au Canada, dans les deux langues officielles. Les essais ne s'arrêtent pas à la frontière — les recherches près de chez vous incluent les sites des deux côtés, parce que l'option la plus proche pour un patient canadien se trouve parfois de l'autre côté.",
+  "Because Beacon collects zero personal data, it is compliant by design with Quebec's Law 25 and PIPEDA — there is nothing for your privacy officer to assess.":
+    "Parce que Beacon ne collecte aucune donnée personnelle, il est conforme dès la conception à la Loi 25 du Québec et à la LPRPDE — votre responsable de la protection des renseignements personnels n'a rien à évaluer.",
+
   // Partners page
   "Put a trial finder on your site — free, in one minute":
     "Ajoutez un outil de recherche d'essais à votre site — gratuit, en une minute",
@@ -542,6 +550,14 @@ const ES: Dict = {
   "Data source": "Fuente de los datos",
   "All trial data comes live from ClinicalTrials.gov, the registry run by the U.S. National Library of Medicine, covering studies in more than 200 countries. Location search is powered by OpenStreetMap Nominatim.":
     "Todos los datos de los ensayos provienen en vivo de ClinicalTrials.gov, el registro administrado por la Biblioteca Nacional de Medicina de EE. UU., que cubre estudios en más de 200 países. La búsqueda de ubicaciones funciona con OpenStreetMap Nominatim.",
+
+  // Canadian positioning
+  "🍁 Made in Canada · English & French · includes trials on both sides of the border":
+    "🍁 Hecho en Canadá · inglés y francés · incluye ensayos a ambos lados de la frontera",
+  "Beacon is built in Canada, in both official languages. Trials don't stop at the border — searches near you include sites on both sides, because the closest option for a Canadian patient is sometimes across it.":
+    "Beacon está hecho en Canadá, en los dos idiomas oficiales. Los ensayos no se detienen en la frontera — las búsquedas cercanas incluyen centros de ambos lados, porque la opción más cercana para un paciente canadiense a veces está al otro lado.",
+  "Because Beacon collects zero personal data, it is compliant by design with Quebec's Law 25 and PIPEDA — there is nothing for your privacy officer to assess.":
+    "Como Beacon no recopila ningún dato personal, cumple desde el diseño con la Ley 25 de Quebec y con PIPEDA — su responsable de privacidad no tiene nada que evaluar.",
 
   // Partners page
   "Put a trial finder on your site — free, in one minute":
