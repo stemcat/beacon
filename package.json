@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "license": "MIT",
-  "description": "Beacon \u2014 a patient-first clinical trial finder. Free forever. Your data never leaves your device.",
+  "description": "Beacon — a patient-first clinical trial finder. Free forever. Your data never leaves your device.",
   "type": "module",
   "scripts": {
     "dev": "vite",
