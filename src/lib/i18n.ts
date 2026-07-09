@@ -272,6 +272,10 @@ const FR: Dict = {
   "Your doctor stays in charge.": "Votre médecin garde la main.",
   "Beacon prepares you for a conversation — it never replaces one.":
     "Beacon vous prépare à une conversation — il ne la remplace jamais.",
+  "Who's behind Beacon?": "Qui est derrière Beacon ?",
+  "Beacon is built and maintained by Kevin, in Montréal. People in his own family have had to search for treatment options the hard way — this is the tool he wished they'd had.":
+    "Beacon est conçu et maintenu par Kevin, à Montréal. Des membres de sa propre famille ont dû chercher des options de traitement à la dure — voici l'outil qu'il aurait voulu leur offrir.",
+  "Questions, corrections, or partnership ideas:": "Questions, corrections ou idées de partenariat :",
   "Data source": "Source des données",
   "All trial data comes live from ClinicalTrials.gov, the registry run by the U.S. National Library of Medicine, covering studies in more than 200 countries. Location search is powered by OpenStreetMap Nominatim and, for Canadian postal codes, Zippopotam — only the first three characters of a postal code are ever sent.":
     "Toutes les données des essais proviennent en direct de ClinicalTrials.gov, le registre géré par la National Library of Medicine des États-Unis, qui couvre des études dans plus de 200 pays. La recherche de lieux est assurée par OpenStreetMap Nominatim et, pour les codes postaux canadiens, par Zippopotam — seuls les trois premiers caractères du code postal sont transmis.",
@@ -549,6 +553,10 @@ const ES: Dict = {
   "Your doctor stays in charge.": "Su médico sigue al mando.",
   "Beacon prepares you for a conversation — it never replaces one.":
     "Beacon lo prepara para una conversación — nunca la reemplaza.",
+  "Who's behind Beacon?": "¿Quién está detrás de Beacon?",
+  "Beacon is built and maintained by Kevin, in Montréal. People in his own family have had to search for treatment options the hard way — this is the tool he wished they'd had.":
+    "Beacon está hecho y mantenido por Kevin, en Montreal. Personas de su propia familia tuvieron que buscar opciones de tratamiento por el camino difícil — esta es la herramienta que le habría gustado darles.",
+  "Questions, corrections, or partnership ideas:": "Preguntas, correcciones o ideas de colaboración:",
   "Data source": "Fuente de los datos",
   "All trial data comes live from ClinicalTrials.gov, the registry run by the U.S. National Library of Medicine, covering studies in more than 200 countries. Location search is powered by OpenStreetMap Nominatim and, for Canadian postal codes, Zippopotam — only the first three characters of a postal code are ever sent.":
     "Todos los datos de los ensayos provienen en vivo de ClinicalTrials.gov, el registro administrado por la Biblioteca Nacional de Medicina de EE. UU., que cubre estudios en más de 200 países. La búsqueda de ubicaciones funciona con OpenStreetMap Nominatim y, para códigos postales canadienses, con Zippopotam — solo se envían los tres primeros caracteres del código postal.",

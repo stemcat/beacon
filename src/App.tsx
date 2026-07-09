@@ -68,6 +68,16 @@ function About() {
         </ul>
       </div>
       <div className="card detail-section">
+        <h3>{t("Who's behind Beacon?")}</h3>
+        <p>
+          {t(
+            "Beacon is built and maintained by Kevin, in Montréal. People in his own family have had to search for treatment options the hard way — this is the tool he wished they'd had.",
+          )}{" "}
+          {t("Questions, corrections, or partnership ideas:")}{" "}
+          <a href="mailto:kevin@beacontrials.ca">kevin@beacontrials.ca</a>
+        </p>
+      </div>
+      <div className="card detail-section">
         <h3>{t("Data source")}</h3>
         <p>
           {t(
