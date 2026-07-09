@@ -10,7 +10,7 @@
  */
 
 import Anthropic from "@anthropic-ai/sdk";
-import { clientIp, env, json, rateLimit, redis, redisConfigured } from "./_shared";
+import { clientIp, env, json, rateLimit, redis, redisConfigured } from "./_shared.js";
 
 
 const CACHE_VERSION = "v1";

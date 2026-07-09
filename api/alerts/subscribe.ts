@@ -14,7 +14,7 @@ import {
   rateLimit,
   sendEmail,
   type AlertSub,
-} from "../_shared";
+} from "../_shared.js";
 
 
 const T = {

@@ -1,6 +1,6 @@
 /** GET /api/alerts/confirm?token=... — activate a pending alert (double opt-in). */
 
-import { getSub, html, putSub, redisConfigured } from "../_shared";
+import { getSub, html, putSub, redisConfigured } from "../_shared.js";
 
 
 export default async function handler(req: Request): Promise<Response> {

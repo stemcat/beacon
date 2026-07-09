@@ -16,7 +16,7 @@ import {
   sendEmail,
   SUBS_SET,
   type AlertSub,
-} from "../_shared";
+} from "../_shared.js";
 
 
 const T = {

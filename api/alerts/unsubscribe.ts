@@ -1,6 +1,6 @@
 /** GET /api/alerts/unsubscribe?token=... — delete the subscription entirely. */
 
-import { deleteSub, getSub, html, redisConfigured } from "../_shared";
+import { deleteSub, getSub, html, redisConfigured } from "../_shared.js";
 
 
 export default async function handler(req: Request): Promise<Response> {
