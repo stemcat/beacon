@@ -62,11 +62,15 @@ npm run build:launch   # build + SEO in one step
 
 ## Launch checklist (Canada-first)
 
-1. Register a **`.ca` domain** (Canadian trust signal + local SEO). Suggestions: `beacontrials.ca`, `getbeacon.ca`, `essaiscliniques.ca` as a French alias.
-2. Push to GitHub — `.github/workflows/deploy.yml` deploys to GitHub Pages on every push and refreshes SEO pages weekly. Set the repo variable `BEACON_BASE_URL` to the production URL. (Or connect to **Netlify**/**Vercel** — configs included, both ship privacy-enforcing security headers.)
-3. Submit `sitemap.xml` in Google Search Console (covers both `/c/…` English and `/fr/c/…` French pages, hreflang-paired).
-4. Offer the widget (`/#/partners`) to Canadian advocacy orgs first — MS Canada, Canadian Cancer Society, Diabetes Canada, and Quebec orgs where the French widget + Law 25 compliance is an unmatched pitch.
-5. Before promoting Spanish, have a native speaker review the ~160 strings in `src/lib/i18n.ts` (French is reviewed; Spanish is drafted).
+Production: **https://beacontrials.ca** (Vercel; repo `stemcat/beacon`; `vercel.json` runs the SEO generator on every deploy).
+
+1. ~~Register `.ca` domain~~ ✅ `beacontrials.ca`
+2. ~~Deploy~~ ✅ Vercel, auto-deploys on push to `main`; app + widget + 2,794-URL bilingual sitemap verified live
+3. Once the domain is Valid in Vercel: set env var `BEACON_BASE_URL=https://beacontrials.ca` (pins canonicals — auto-detect picks Vercel's *shortest* custom domain, which a future redirect domain could hijack), then **redeploy once** so sitemap/canonical/hreflang switch from the vercel.app URL.
+4. Weekly SEO refresh: create a Vercel Deploy Hook (branch `main`) and save it as GitHub secret `VERCEL_DEPLOY_HOOK_URL` — `.github/workflows/weekly-refresh.yml` triggers it Mondays 06:00 UTC.
+5. Google Search Console: add `beacontrials.ca` as a Domain property (DNS TXT), submit `https://beacontrials.ca/sitemap.xml`. Bonus: import into Bing Webmaster Tools (older demographic skews Bing).
+6. Offer the widget (`/#/partners`) to Canadian advocacy orgs first — MS Canada, Canadian Cancer Society, Diabetes Canada, and Quebec orgs where the French widget + Law 25 compliance is an unmatched pitch.
+7. Before promoting Spanish, have a native speaker review the ~160 strings in `src/lib/i18n.ts` (French is reviewed; Spanish is drafted).
 
 ## Strategy (updated after competitive research, July 2026)
 
